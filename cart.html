@@ -1,209 +1,249 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Your Cart - MyStore</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Your Cart | Coffee Haven</title>
+  <link rel="stylesheet" href="css/style.css" />
   <style>
     body {
-      font-family: 'Poppins', sans-serif;
-      background-color: #f3f3f3;
+      font-family: "Poppins", sans-serif;
+      background-color: #fafafa;
       margin: 0;
       padding: 0;
     }
 
     header {
-      background-color: #232f3e;
+      background-color: #800000;
       color: white;
-      padding: 15px 25px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    header h1 {
-      margin: 0;
-      font-size: 22px;
-    }
-
-    header a {
-      color: white;
-      text-decoration: none;
-      background: #febd69;
-      padding: 6px 12px;
-      border-radius: 4px;
+      padding: 15px;
+      text-align: center;
+      font-size: 1.4rem;
       font-weight: 600;
     }
 
-    .container {
-      display: flex;
-      flex-wrap: wrap;
-      padding: 20px;
-      justify-content: space-between;
+    .cart-container {
+      max-width: 900px;
+      margin: 30px auto;
+      background: #fff;
+      border-radius: 10px;
+      padding: 25px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     }
 
-    .cart-items {
-      flex: 0.7;
-      background: white;
-      border-radius: 10px;
-      padding: 20px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      min-height: 300px;
+    h2 {
+      border-bottom: 2px solid #800000;
+      padding-bottom: 10px;
     }
 
     .cart-item {
       display: flex;
       align-items: center;
+      justify-content: space-between;
       border-bottom: 1px solid #ddd;
       padding: 15px 0;
     }
 
-    .cart-item:last-child {
-      border-bottom: none;
-    }
-
     .cart-item img {
-      width: 100px;
-      height: 100px;
+      width: 90px;
+      height: 90px;
+      border-radius: 10px;
       object-fit: cover;
-      border-radius: 8px;
-      margin-right: 20px;
     }
 
-    .cart-details {
+    .item-details {
       flex: 1;
+      margin-left: 20px;
     }
 
-    .cart-details h4 {
+    .item-details h3 {
       margin: 0;
-      font-size: 18px;
+      color: #333;
     }
 
-    .cart-details p {
-      color: #555;
-      font-size: 15px;
-      margin-top: 6px;
+    .price {
+      color: #444;
+      margin: 5px 0;
+    }
+
+    .qty-control {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .qty-btn {
+      background: #800000;
+      color: white;
+      border: none;
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+    .qty-btn:hover {
+      background: #a00000;
+    }
+
+    .qty-value {
+      font-size: 16px;
+      width: 40px;
+      text-align: center;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 3px;
+    }
+
+    .subtotal {
+      font-weight: 600;
+      color: #222;
     }
 
     .remove-btn {
-      background-color: #ff4d4d;
-      border: none;
+      background: crimson;
       color: white;
-      padding: 8px 12px;
+      border: none;
+      padding: 6px 10px;
       border-radius: 6px;
       cursor: pointer;
     }
 
     .remove-btn:hover {
-      background-color: #e63946;
+      background: darkred;
     }
 
-    .summary {
-      flex: 0.25;
-      background: white;
-      border-radius: 10px;
-      padding: 20px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      height: fit-content;
-    }
-
-    .summary h3 {
-      margin-top: 0;
-      font-size: 20px;
-      color: #333;
-    }
-
-    .summary p {
-      font-size: 16px;
-      color: #444;
-    }
-
-    .checkout-btn {
-      width: 100%;
-      background-color: #ffd814;
-      border: none;
-      padding: 12px;
-      font-size: 16px;
+    .total-section {
+      text-align: right;
+      font-size: 1.2rem;
+      margin-top: 20px;
       font-weight: 600;
+    }
+
+    .actions {
+      text-align: right;
+      margin-top: 25px;
+    }
+
+    .checkout-btn,
+    .back-btn {
+      background: #800000;
+      color: white;
+      padding: 10px 16px;
+      border: none;
       border-radius: 8px;
       cursor: pointer;
-      margin-top: 10px;
+      font-size: 15px;
     }
 
-    .checkout-btn:hover {
-      background-color: #f7ca00;
+    .checkout-btn:hover,
+    .back-btn:hover {
+      background: #a00000;
+    }
+
+    .back-btn {
+      background: gray;
+      margin-right: 10px;
     }
 
     .empty {
       text-align: center;
-      padding: 60px;
-      font-size: 18px;
-      color: #555;
+      padding: 50px;
+      color: #777;
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>🛒 Your Shopping Cart</h1>
-    <a href="menu.html">⬅ Go Back to Menu</a>
-  </header>
 
-  <div class="container">
-    <div class="cart-items" id="cart-items"></div>
+  <header>🛒 Your Shopping Cart</header>
 
-    <div class="summary">
-      <h3>Order Summary</h3>
-      <p>Items: <span id="item-count">0</span></p>
-      <p>Subtotal: ₹<span id="subtotal">0.00</span></p>
+  <div class="cart-container">
+    <h2>Cart Summary</h2>
+    <div id="cart-items"></div>
+
+    <div class="total-section">
+      Total: ₹<span id="cart-total">0.00</span>
+    </div>
+
+    <div class="actions">
+      <button class="back-btn" onclick="window.location.href='menu.html'">← Go Back</button>
       <button class="checkout-btn">Proceed to Checkout</button>
     </div>
   </div>
 
   <script>
-    function loadCart() {
-      const cart = JSON.parse(localStorage.getItem('cart')) || [];
-      const container = document.getElementById('cart-items');
-      const subtotalElem = document.getElementById('subtotal');
-      const itemCountElem = document.getElementById('item-count');
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-      container.innerHTML = '';
+    const cartContainer = document.getElementById("cart-items");
+    const totalEl = document.getElementById("cart-total");
+
+    function renderCart() {
+      cartContainer.innerHTML = "";
+      let total = 0;
 
       if (cart.length === 0) {
-        container.innerHTML = '<div class="empty">Your cart is empty.</div>';
-        subtotalElem.textContent = '0.00';
-        itemCountElem.textContent = '0';
+        cartContainer.innerHTML = '<p class="empty">Your cart is empty ☕</p>';
+        totalEl.textContent = "0.00";
         return;
       }
 
-      let subtotal = 0;
-
       cart.forEach((item, index) => {
-        subtotal += parseFloat(item.price) || 0;
+        const subtotal = item.price * item.quantity;
+        total += subtotal;
 
-        container.innerHTML += `
-          <div class="cart-item">
-            <img src="${item.image}" alt="${item.name}">
-            <div class="cart-details">
-              <h4>${item.name}</h4>
-              <p>Price: ₹${item.price}</p>
+        const div = document.createElement("div");
+        div.classList.add("cart-item");
+
+        div.innerHTML = `
+          <img src="${item.image || 'images/default.jpg'}" alt="${item.name}">
+          <div class="item-details">
+            <h3>${item.name}</h3>
+            <p class="price">Price: ₹${item.price.toFixed(2)}</p>
+            <div class="qty-control">
+              <button class="qty-btn decrease" data-index="${index}">−</button>
+              <input type="text" value="${item.quantity}" class="qty-value" readonly>
+              <button class="qty-btn increase" data-index="${index}">+</button>
             </div>
-            <button class="remove-btn" onclick="removeItem(${index})">Remove</button>
+            <p class="subtotal">Subtotal: ₹${subtotal.toFixed(2)}</p>
           </div>
+          <button class="remove-btn" data-index="${index}">Remove</button>
         `;
+
+        cartContainer.appendChild(div);
       });
 
-      subtotalElem.textContent = subtotal.toFixed(2);
-      itemCountElem.textContent = cart.length;
+      totalEl.textContent = total.toFixed(2);
+      localStorage.setItem("cart", JSON.stringify(cart));
     }
 
-    function removeItem(index) {
-      let cart = JSON.parse(localStorage.getItem('cart')) || [];
-      cart.splice(index, 1);
-      localStorage.setItem('cart', JSON.stringify(cart));
-      loadCart();
-    }
+    // Quantity buttons
+    document.addEventListener("click", (e) => {
+      if (e.target.classList.contains("increase")) {
+        const index = e.target.dataset.index;
+        cart[index].quantity += 1;
+        localStorage.setItem("cart", JSON.stringify(cart));
+        renderCart();
+      } else if (e.target.classList.contains("decrease")) {
+        const index = e.target.dataset.index;
+        if (cart[index].quantity > 1) {
+          cart[index].quantity -= 1;
+        } else {
+          cart.splice(index, 1); // remove if goes below 1
+        }
+        localStorage.setItem("cart", JSON.stringify(cart));
+        renderCart();
+      } else if (e.target.classList.contains("remove-btn")) {
+        const index = e.target.dataset.index;
+        cart.splice(index, 1);
+        localStorage.setItem("cart", JSON.stringify(cart));
+        renderCart();
+      }
+    });
 
-    window.onload = loadCart;
+    renderCart();
   </script>
+
 </body>
 </html>
