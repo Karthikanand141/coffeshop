@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign In | Coffee Haven</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header>
+    <a href="index.html" class="logo">☕ Coffee Haven</a>
+  </header>
+
+  <section class="signin">
+    <h2>Sign In to Continue</h2>
+    <form id="login-form">
+      <label>Email</label>
+      <input type="email" id="email" required placeholder="you@example.com" />
+      <label>Password</label>
+      <input type="password" id="password" required placeholder="Enter password" />
+      <button type="submit">Sign In</button>
+      <p>New user? <a href="#">Create account</a></p>
+    </form>
+  </section>
+
+  <script>
+    document.getElementById("login-form").addEventListener("submit", function(e) {
+      e.preventDefault();
+      localStorage.setItem("user", document.getElementById("email").value);
+      window.location.href = "menu.html";
+    });
+  </script>
+</body>
+</html>
