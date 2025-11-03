@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Coffee Shop</title>
-  <link rel="stylesheet" href="style.css" />
-  <script src="script.js" defer></script>
+  <title>CoffeeHouse | Fresh Coffee Every Morning</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <script src="js/script.js" defer></script>
 </head>
 <body>
 
-  <!-- Header -->
+  <!-- ===== HEADER ===== -->
   <header>
     <a href="#" class="logo">☕ Coffee<span>House</span></a>
     <div class="menu-toggle" id="menu-toggle">☰</div>
@@ -19,59 +19,55 @@
       <a href="#menu">Menu</a>
       <a href="#contact">Contact</a>
     </nav>
-    <div class="cart-icon" id="cart-icon">
-      🛒 <span id="cart-count">0</span>
-    </div>
   </header>
 
-  <!-- Hero -->
+  <!-- ===== HERO SECTION ===== -->
   <section id="home" class="hero">
     <div class="content">
       <h1>Fresh Coffee Every Morning</h1>
-      <p>Awaken your senses with the finest blends and warm ambiance.</p>
+      <p>Experience the rich aroma and warmth of perfectly brewed coffee.</p>
       <a href="#menu" class="btn">Order Now</a>
     </div>
   </section>
 
-  <!-- Menu Section -->
+  <!-- ===== ABOUT SECTION ===== -->
+  <section id="about" class="about">
+    <div class="about-img">
+      <img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93" alt="Coffee cup">
+    </div>
+    <div class="about-text">
+      <h2>About Us</h2>
+      <p>Welcome to CoffeeHouse — where passion meets perfection. We roast our beans daily and craft every cup with love. Whether you're grabbing a quick espresso or staying for a latte, you’ll feel at home here.</p>
+      <a href="#menu" class="btn">See Our Menu</a>
+    </div>
+  </section>
+
+  <!-- ===== MENU PREVIEW ===== -->
   <section id="menu" class="menu">
-    <h2>Our Menu</h2>
+    <h2>Popular Brews</h2>
     <div class="menu-container">
-      <div class="menu-item" data-name="Espresso" data-price="3">
+      <div class="menu-item">
         <img src="https://images.unsplash.com/photo-1510626176961-4b57d4fbad03" alt="Espresso">
         <h3>Espresso</h3>
-        <p>Strong and rich flavor to start your day.</p>
+        <p>Rich, bold, and perfectly balanced shot.</p>
         <span>$3.00</span>
-        <button class="add-to-cart">Add to Cart</button>
       </div>
-      <div class="menu-item" data-name="Cappuccino" data-price="4">
+      <div class="menu-item">
         <img src="https://images.unsplash.com/photo-1511920170033-f8396924c348" alt="Cappuccino">
         <h3>Cappuccino</h3>
-        <p>Perfect balance of milk and espresso.</p>
+        <p>Perfect harmony of espresso and frothy milk.</p>
         <span>$4.00</span>
-        <button class="add-to-cart">Add to Cart</button>
       </div>
-      <div class="menu-item" data-name="Latte" data-price="4.5">
+      <div class="menu-item">
         <img src="https://images.unsplash.com/photo-1521305916504-4a1121188589" alt="Latte">
         <h3>Latte</h3>
-        <p>Creamy and smooth for any time of day.</p>
+        <p>Creamy delight topped with smooth foam.</p>
         <span>$4.50</span>
-        <button class="add-to-cart">Add to Cart</button>
       </div>
     </div>
   </section>
 
-  <!-- Cart Popup -->
-  <div class="cart-popup" id="cart-popup">
-    <h2>Your Cart</h2>
-    <ul id="cart-items"></ul>
-    <div class="cart-total">
-      <strong>Total:</strong> $<span id="cart-total">0.00</span>
-    </div>
-    <button id="checkout-btn">Checkout</button>
-  </div>
-
-  <!-- Contact Section -->
+  <!-- ===== CONTACT SECTION ===== -->
   <section id="contact" class="contact">
     <h2>Contact Us</h2>
     <form>
@@ -82,7 +78,7 @@
     </form>
   </section>
 
-  <!-- Footer -->
+  <!-- ===== FOOTER ===== -->
   <footer>
     <p>© 2025 CoffeeHouse. All rights reserved.</p>
   </footer>
