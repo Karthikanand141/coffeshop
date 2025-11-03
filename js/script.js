@@ -1,32 +1,32 @@
+// Handle cart counter in navbar
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+function updateCartCount() {
+  document.getElementById("cart-count").textContent = cart.length;
+}
+
 document.addEventListener("DOMContentLoaded", () => {
-  const addButtons = document.querySelectorAll(".add-cart");
-  const cartCount = document.getElementById("cart-count");
+  updateCartCount();
 
-  function updateCartCount() {
-    const cart = JSON.parse(localStorage.getItem("cart")) || [];
-    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-    cartCount.textContent = totalItems;
-  }
+  const addButtons = document.querySelectorAll(".add-to-cart");
+  addButtons.forEach(button => {
+    button.addEventListener("click", (e) => {
+      const item = e.target.closest(".menu-item");
+      const title = item.querySelector("h3").textContent;
+      const price = parseFloat(item.querySelector("p").textContent.replace("₹", ""));
+      const quantity = parseInt(item.querySelector("select").value);
+      const image = item.querySelector("img").src;
 
-  addButtons.forEach(btn => {
-    btn.addEventListener("click", () => {
-      const name = btn.dataset.name;
-      const price = parseFloat(btn.dataset.price);
-      const img = btn.dataset.img;
-
-      let cart = JSON.parse(localStorage.getItem("cart")) || [];
-      const existing = cart.find(item => item.name === name);
+      const existing = cart.find(c => c.title === title);
       if (existing) {
-        existing.quantity++;
+        existing.quantity += quantity;
       } else {
-        cart.push({ name, price, img, quantity: 1 });
+        cart.push({ title, price, quantity, image });
       }
 
       localStorage.setItem("cart", JSON.stringify(cart));
       updateCartCount();
-      window.location.href = "cart.html"; // redirect to cart
+      window.location.href = "cart.html"; // Redirect to cart
     });
   });
-
-  updateCartCount();
 });
