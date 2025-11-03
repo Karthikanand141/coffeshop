@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Product | Coffee Bliss</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="logo">☕ Coffee Bliss</div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="menu.html">Menu</a>
+      <a href="cart.html">Cart (<span id="cart-count">0</span>)</a>
+    </nav>
+  </header>
+
+  <!-- Product Detail Section -->
+  <main class="product-page">
+    <div class="product-container">
+      <div class="product-image">
+        <img src="images/coffee1.png" alt="Espresso">
+      </div>
+
+      <div class="product-info">
+        <h2>Espresso</h2>
+        <p class="price">$3.00</p>
+        <p class="desc">A rich and bold espresso shot to start your morning strong.</p>
+
+        <label for="quantity">Quantity:</label>
+        <select id="quantity">
+          <option value="1" selected>1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+          <option value="8">8</option>
+          <option value="9">9</option>
+          <option value="10">10</option>
+        </select>
+
+        <div class="product-buttons">
+          <button id="addToCartBtn">Add to Cart</button>
+          <button id="buyNowBtn">Buy Now</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    © 2025 Coffee Bliss | Enjoy your brew ☕
+  </footer>
+
+  <script src="js/product.js"></script>
+</body>
+</html>
