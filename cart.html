@@ -3,260 +3,182 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Coffee Haven | Cart</title>
+  <title>Your Cart | Coffee Haven</title>
   <link rel="stylesheet" href="css/style.css" />
   <style>
-    /* Navbar Sign-In Button */
-    #signin-link {
-      background-color: #6f4e37;
+    body {
+      font-family: Poppins, sans-serif;
+      background: #fafafa;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background: #800000;
       color: white;
-      padding: 6px 12px;
-      border-radius: 6px;
-      text-decoration: none;
-      transition: 0.3s;
-      cursor: pointer;
-    }
-    #signin-link:hover { background-color: #8b5e3b; }
-
-    /* Modal Overlay */
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 999;
-      left: 0; top: 0;
-      width: 100%; height: 100%;
-      background-color: rgba(0,0,0,0.5);
-      justify-content: center; align-items: center;
-    }
-    .modal-content {
-      background: #fff;
-      padding: 25px 30px;
-      border-radius: 10px;
-      width: 320px;
+      padding: 15px 0;
       text-align: center;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-      animation: fadeIn 0.3s ease;
+      font-size: 1.3rem;
+      font-weight: 600;
     }
-    .modal-content h2 { margin-bottom: 15px; color: #6f4e37; }
-    .modal-content input {
-      width: 100%; padding: 10px;
-      margin: 8px 0; border: 1px solid #ccc; border-radius: 5px;
-    }
-    .modal-content button {
-      background: #6f4e37; color: #fff;
-      border: none; padding: 10px 16px;
-      margin-top: 10px; border-radius: 6px;
-      cursor: pointer; width: 100%;
-    }
-    .modal-content button:hover { background: #8b5e3b; }
-    .close-btn { float: right; font-size: 20px; cursor: pointer; color: #555; }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: scale(0.9); }
-      to { opacity: 1; transform: scale(1); }
-    }
-
-    /* Cart Layout */
     .cart-container {
-      max-width: 900px;
-      margin: 100px auto 50px;
+      max-width: 800px;
+      margin: 30px auto;
       background: #fff;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     }
-    .cart-container h2 {
-      text-align: center;
-      color: #6f4e37;
-      margin-bottom: 20px;
-    }
-
     .cart-item {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 15px;
-      border-bottom: 1px solid #eee;
+      border-bottom: 1px solid #ddd;
+      padding: 15px 0;
     }
     .cart-item img {
       width: 80px;
       height: 80px;
+      border-radius: 10px;
       object-fit: cover;
-      border-radius: 8px;
-      margin-right: 20px;
     }
-    .cart-item-details {
+    .item-info {
       flex: 1;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      margin-left: 15px;
     }
-    .cart-item-name {
+    .item-info h3 {
+      margin: 0;
+    }
+    .price, .subtotal {
       font-weight: 600;
       color: #333;
     }
-    .cart-item-price {
-      color: #6f4e37;
-      font-weight: bold;
-    }
-    .cart-item-qty {
-      margin: 0 10px;
-      border-radius: 5px;
+    input.qty-input {
+      width: 60px;
       padding: 4px;
+      text-align: center;
+      font-size: 15px;
     }
     .remove-btn {
-      background: #d9534f;
-      color: #fff;
+      background: crimson;
+      color: white;
       border: none;
       padding: 6px 10px;
-      border-radius: 5px;
+      border-radius: 6px;
       cursor: pointer;
-      transition: 0.3s;
     }
-    .remove-btn:hover { background: #c9302c; }
-
-    .cart-total {
+    .remove-btn:hover {
+      background: darkred;
+    }
+    .total-section {
       text-align: right;
-      font-weight: bold;
-      margin-top: 25px;
-      font-size: 18px;
-      color: #6f4e37;
+      margin-top: 20px;
+      font-size: 1.2rem;
+      font-weight: 600;
     }
-    .empty-msg {
-      text-align: center;
-      color: #999;
-      margin-top: 40px;
+    .actions {
+      text-align: right;
+      margin-top: 20px;
+    }
+    .checkout-btn, .back-btn {
+      background: #800000;
+      color: white;
+      padding: 10px 16px;
+      border: none;
+      border-radius: 8px;
+      font-size: 15px;
+      cursor: pointer;
+    }
+    .checkout-btn:hover, .back-btn:hover {
+      background: #a00000;
+    }
+    .back-btn {
+      background: gray;
+      margin-right: 10px;
     }
   </style>
 </head>
 <body>
 
-  <!-- Header -->
-  <header>
-    <a href="index.html" class="logo">☕ Coffee Haven</a>
-    <nav class="navbar">
-      <a href="index.html">Home</a>
-      <a href="menu.html">Menu</a>
-      <a href="cart.html" class="active">Cart <span id="cart-count">0</span></a>
-      <a id="signin-link">Sign In</a>
-    </nav>
-  </header>
+  <header>🛒 Your Shopping Cart</header>
 
-  <!-- Cart Section -->
-  <div class="cart-container">
-    <h2>Your Cart</h2>
+  <div class="cart-container" id="cart-container">
+    <h2>Cart Summary</h2>
     <div id="cart-items"></div>
-    <div class="cart-total" id="cart-total"></div>
-  </div>
-
-  <!-- Sign In Modal -->
-  <div id="signin-modal" class="modal">
-    <div class="modal-content">
-      <span class="close-btn">&times;</span>
-      <h2>Sign In</h2>
-      <input type="email" id="email" placeholder="Enter email" required />
-      <input type="password" id="password" placeholder="Enter password" required />
-      <button id="login-btn">Sign In</button>
+    <div class="total-section">Total: ₹<span id="cart-total">0</span></div>
+    <div class="actions">
+      <button class="back-btn" onclick="window.location.href='menu.html'">← Go Back</button>
+      <button class="checkout-btn">Proceed to Checkout</button>
     </div>
   </div>
 
-  <!-- Footer -->
-  <footer>
-    <p>© 2025 Coffee Haven | Freshly brewed happiness ☕</p>
-  </footer>
-
-  <script src="js/script.js"></script>
   <script>
-    // ==== Sign-In Logic ====
-    const modal = document.getElementById("signin-modal");
-    const signinLink = document.getElementById("signin-link");
-    const closeBtn = document.querySelector(".close-btn");
-    const loginBtn = document.getElementById("login-btn");
+    // Retrieve cart from localStorage
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-    const user = localStorage.getItem("user");
+    const cartItemsEl = document.getElementById("cart-items");
+    const totalEl = document.getElementById("cart-total");
 
-    if (user) {
-      signinLink.textContent = "Hello, " + user.split("@")[0];
-      signinLink.style.background = "#4caf50";
-      signinLink.addEventListener("click", () => {
-        if (confirm("Sign out?")) {
-          localStorage.removeItem("user");
-          location.reload();
-        }
-      });
-    } else {
-      signinLink.addEventListener("click", () => modal.style.display = "flex");
-    }
-
-    closeBtn.addEventListener("click", () => modal.style.display = "none");
-    window.addEventListener("click", (e) => {
-      if (e.target === modal) modal.style.display = "none";
-    });
-
-    loginBtn.addEventListener("click", () => {
-      const email = document.getElementById("email").value.trim();
-      const pass = document.getElementById("password").value.trim();
-      if (!email || !pass) { alert("Please enter both email and password."); return; }
-      localStorage.setItem("user", email);
-      modal.style.display = "none";
-      alert("Signed in successfully!");
-      location.reload();
-    });
-
-    // ==== Cart Display ====
-    let cartItems = JSON.parse(localStorage.getItem("cart") || "[]");
-    const cartContainer = document.getElementById("cart-items");
-    const cartTotalEl = document.getElementById("cart-total");
-    const cartCount = document.getElementById("cart-count");
-
+    // ✅ Render all cart items
     function renderCart() {
-      if (cartItems.length === 0) {
-        cartContainer.innerHTML = "<p class='empty-msg'>Your cart is empty ☕</p>";
-        cartTotalEl.textContent = "";
-        cartCount.textContent = "0";
+      cartItemsEl.innerHTML = "";
+      let total = 0;
+
+      if (cart.length === 0) {
+        cartItemsEl.innerHTML = "<p>Your cart is empty ☕</p>";
+        totalEl.textContent = "0";
         return;
       }
 
-      let total = 0;
-      cartContainer.innerHTML = cartItems.map((item, i) => {
-        total += item.price * item.quantity;
-        return `
-          <div class="cart-item">
-            <img src="${item.image}" alt="${item.name}">
-            <div class="cart-item-details">
-              <span class="cart-item-name">${item.name}</span>
-              <span class="cart-item-price">₹${item.price.toFixed(2)}</span>
-              <select class="cart-item-qty" data-index="${i}">
-                ${[1,2,3,4,5].map(q => `<option ${q===item.quantity?'selected':''}>${q}</option>`).join('')}
-              </select>
-              <button class="remove-btn" data-index="${i}">Remove</button>
-            </div>
-          </div>`;
-      }).join("");
+      cart.forEach((item, index) => {
+        const subtotal = item.price * item.quantity;
+        total += subtotal;
 
-      cartTotalEl.textContent = "Total: ₹" + total.toFixed(2);
-      cartCount.textContent = cartItems.length;
-
-      document.querySelectorAll(".remove-btn").forEach(btn => {
-        btn.addEventListener("click", e => {
-          const i = e.target.dataset.index;
-          cartItems.splice(i, 1);
-          localStorage.setItem("cart", JSON.stringify(cartItems));
-          renderCart();
-        });
+        const div = document.createElement("div");
+        div.classList.add("cart-item");
+        div.innerHTML = `
+          <img src="${item.img}" alt="${item.name}">
+          <div class="item-info">
+            <h3>${item.name}</h3>
+            <p class="price">Price: ₹${item.price.toFixed(2)}</p>
+            <label>Qty:</label>
+            <input type="number" class="qty-input" min="1" value="${item.quantity}" data-index="${index}">
+            <p class="subtotal">Subtotal: ₹${subtotal.toFixed(2)}</p>
+          </div>
+          <button class="remove-btn" data-index="${index}">Remove</button>
+        `;
+        cartItemsEl.appendChild(div);
       });
 
-      document.querySelectorAll(".cart-item-qty").forEach(sel => {
-        sel.addEventListener("change", e => {
-          const i = e.target.dataset.index;
-          cartItems[i].quantity = parseInt(e.target.value);
-          localStorage.setItem("cart", JSON.stringify(cartItems));
-          renderCart();
-        });
-      });
+      totalEl.textContent = total.toFixed(2);
+      localStorage.setItem("cart", JSON.stringify(cart));
     }
 
+    // ✅ Update quantity dynamically
+    document.addEventListener("input", (e) => {
+      if (e.target.classList.contains("qty-input")) {
+        const index = e.target.getAttribute("data-index");
+        const newQty = parseInt(e.target.value);
+        if (newQty > 0) {
+          cart[index].quantity = newQty;
+          localStorage.setItem("cart", JSON.stringify(cart));
+          renderCart();
+        }
+      }
+    });
+
+    // ✅ Remove item from cart
+    document.addEventListener("click", (e) => {
+      if (e.target.classList.contains("remove-btn")) {
+        const index = e.target.getAttribute("data-index");
+        cart.splice(index, 1);
+        localStorage.setItem("cart", JSON.stringify(cart));
+        renderCart();
+      }
+    });
+
+    // ✅ Initialize cart display
     renderCart();
   </script>
+
 </body>
 </html>
