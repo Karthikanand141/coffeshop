@@ -1,3 +1,20 @@
+// Show logged-in user or Sign In link
+const signinLink = document.getElementById("signin-link");
+const user = localStorage.getItem("user");
+
+if (user && signinLink) {
+  signinLink.textContent = "Hello, " + user.split("@")[0];
+  signinLink.href = "#";
+  signinLink.addEventListener("click", () => {
+    if (confirm("Sign out?")) {
+      localStorage.removeItem("user");
+      location.reload();
+    }
+  });
+}
+
+
+
 // ======== Initialize Cart ========
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
