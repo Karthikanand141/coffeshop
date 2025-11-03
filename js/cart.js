@@ -1,66 +1,61 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const cartContainer = document.getElementById("cart-items");
-  const totalPrice = document.getElementById("total-price");
-  const cartCount = document.getElementById("cart-count");
+  const cartItemsContainer = document.getElementById("cart-items");
+  const cartTotalElement = document.getElementById("cart-total");
+  const cartCountElement = document.getElementById("cart-count");
 
-  function updateCartCount(cart) {
-    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-    cartCount.textContent = totalItems;
-  }
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-  function updateTotal(cart) {
-    const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-    totalPrice.textContent = total.toFixed(2);
-  }
-
-  function renderCart() {
-    let cart = JSON.parse(localStorage.getItem("cart")) || [];
-    cartContainer.innerHTML = "";
-
-    if (cart.length === 0) {
-      cartContainer.innerHTML = "<p>Your cart is empty ☕</p>";
-      updateTotal(cart);
-      updateCartCount(cart);
-      return;
-    }
+  function updateCart() {
+    cartItemsContainer.innerHTML = "";
+    let total = 0;
 
     cart.forEach((item, index) => {
-      const div = document.createElement("div");
-      div.classList.add("cart-item");
-      div.innerHTML = `
-        <img src="${item.img}" alt="${item.name}" width="60">
-        <span>${item.name}</span>
-        <div class="qty-controls">
+      const itemTotal = item.price * item.quantity;
+      total += itemTotal;
+
+      const cartItem = document.createElement("div");
+      cartItem.classList.add("cart-item");
+      cartItem.innerHTML = `
+        <img src="${item.image}" alt="${item.name}">
+        <div class="item-details">
+          <div class="item-name">${item.name}</div>
+          <div class="item-price">$${item.price.toFixed(2)}</div>
+        </div>
+        <div class="quantity-controls">
           <button class="decrease" data-index="${index}">-</button>
           <span>${item.quantity}</span>
           <button class="increase" data-index="${index}">+</button>
         </div>
-        <span>$${(item.price * item.quantity).toFixed(2)}</span>
-        <button class="remove" data-index="${index}">Remove</button>
+        <div class="item-total">$${itemTotal.toFixed(2)}</div>
+        <button class="remove-btn" data-index="${index}">Remove</button>
       `;
-      cartContainer.appendChild(div);
+      cartItemsContainer.appendChild(cartItem);
     });
 
-    updateTotal(cart);
-    updateCartCount(cart);
+    cartTotalElement.textContent = total.toFixed(2);
+    cartCountElement.textContent = cart.length;
+    localStorage.setItem("cart", JSON.stringify(cart));
   }
 
-  cartContainer.addEventListener("click", (e) => {
-    let cart = JSON.parse(localStorage.getItem("cart")) || [];
-    const index = e.target.dataset.index;
-
+  cartItemsContainer.addEventListener("click", (e) => {
     if (e.target.classList.contains("increase")) {
+      const index = e.target.dataset.index;
       cart[index].quantity++;
+      updateCart();
     } else if (e.target.classList.contains("decrease")) {
-      cart[index].quantity--;
-      if (cart[index].quantity <= 0) cart.splice(index, 1);
-    } else if (e.target.classList.contains("remove")) {
+      const index = e.target.dataset.index;
+      if (cart[index].quantity > 1) {
+        cart[index].quantity--;
+      } else {
+        cart.splice(index, 1);
+      }
+      updateCart();
+    } else if (e.target.classList.contains("remove-btn")) {
+      const index = e.target.dataset.index;
       cart.splice(index, 1);
+      updateCart();
     }
-
-    localStorage.setItem("cart", JSON.stringify(cart));
-    renderCart();
   });
 
-  renderCart();
+  updateCart();
 });
