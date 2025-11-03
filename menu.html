@@ -10,81 +10,103 @@
 
   <!-- ===== Header / Navbar ===== -->
   <header>
-    <a href="index.html" class="logo">☕ Coffee Haven</a>
-    <nav class="navbar">
-      <a href="index.html">Home</a>
-      <a href="menu.html" class="active">Menu</a>
-      <a href="cart.html">Cart <span id="cart-count">0</span></a>
-    </nav>
+    ☕ Coffee Haven |
+    <a href="index.html" style="color:white; text-decoration:none;">Home</a> |
+    <a href="menu.html" style="color:#ffcccb; text-decoration:none;">Menu</a> |
+    <a href="cart.html" style="color:white; text-decoration:none;">Cart (<span id="cart-count">0</span>)</a>
   </header>
 
   <!-- ===== Menu Section ===== -->
-  <section class="menu">
-    <h2>Our Coffee Menu</h2>
-    <div class="menu-container">
+  <section class="menu-container">
+    <h2 style="text-align:center; margin-bottom:20px; color:#800000;">Our Coffee Menu</h2>
+    
+    <div class="menu-grid">
 
-      <!-- ===== Coffee Item Template ===== -->
+      <!-- ===== Coffee Item 1 ===== -->
       <div class="menu-item">
-        <img src="images/coffee1.png" alt="Espresso" />
+        <img src="images/coffee1.png" alt="Espresso">
         <h3>Espresso</h3>
-        <p class="price">$3.00</p>
+        <p class="price">₹120</p>
         <div class="quantity-control">
           <label for="espresso-qty">Qty:</label>
           <select id="espresso-qty">
             <option>1</option><option>2</option><option>3</option><option>4</option>
           </select>
         </div>
-        <div class="action-buttons">
-          <button class="add-cart" data-name="Espresso" data-price="3" data-img="images/coffee1.png">Add to Cart</button>
-          <button class="buy-now" data-name="Espresso" data-price="3" data-img="images/coffee1.png">Buy Now</button>
+        <div class="action-buttons" style="margin-top:10px;">
+          <button class="btn-primary add-cart" 
+                  data-name="Espresso" 
+                  data-price="120" 
+                  data-img="images/coffee1.png">
+            Add to Cart
+          </button>
+          <button class="btn-secondary buy-now">Buy Now</button>
         </div>
       </div>
 
+      <!-- ===== Coffee Item 2 ===== -->
       <div class="menu-item">
-        <img src="images/coffee2.png" alt="Cappuccino" />
+        <img src="images/coffee2.png" alt="Cappuccino">
         <h3>Cappuccino</h3>
-        <p class="price">$4.50</p>
+        <p class="price">₹150</p>
         <div class="quantity-control">
           <label for="cappuccino-qty">Qty:</label>
           <select id="cappuccino-qty">
             <option>1</option><option>2</option><option>3</option><option>4</option>
           </select>
         </div>
-        <div class="action-buttons">
-          <button class="add-cart" data-name="Cappuccino" data-price="4.5" data-img="images/coffee2.png">Add to Cart</button>
-          <button class="buy-now" data-name="Cappuccino" data-price="4.5" data-img="images/coffee2.png">Buy Now</button>
+        <div class="action-buttons" style="margin-top:10px;">
+          <button class="btn-primary add-cart" 
+                  data-name="Cappuccino" 
+                  data-price="150" 
+                  data-img="images/coffee2.png">
+            Add to Cart
+          </button>
+          <button class="btn-secondary buy-now">Buy Now</button>
         </div>
       </div>
 
+      <!-- ===== Coffee Item 3 ===== -->
       <div class="menu-item">
-        <img src="images/coffee3.png" alt="Latte" />
+        <img src="images/coffee3.png" alt="Latte">
         <h3>Latte</h3>
-        <p class="price">$4.00</p>
+        <p class="price">₹140</p>
         <div class="quantity-control">
           <label for="latte-qty">Qty:</label>
           <select id="latte-qty">
             <option>1</option><option>2</option><option>3</option><option>4</option>
           </select>
         </div>
-        <div class="action-buttons">
-          <button class="add-cart" data-name="Latte" data-price="4" data-img="images/coffee3.png">Add to Cart</button>
-          <button class="buy-now" data-name="Latte" data-price="4" data-img="images/coffee3.png">Buy Now</button>
+        <div class="action-buttons" style="margin-top:10px;">
+          <button class="btn-primary add-cart" 
+                  data-name="Latte" 
+                  data-price="140" 
+                  data-img="images/coffee3.png">
+            Add to Cart
+          </button>
+          <button class="btn-secondary buy-now">Buy Now</button>
         </div>
       </div>
 
+      <!-- ===== Coffee Item 4 ===== -->
       <div class="menu-item">
-        <img src="images/coffee4.png" alt="Mocha" />
+        <img src="images/coffee4.png" alt="Mocha">
         <h3>Mocha</h3>
-        <p class="price">$4.80</p>
+        <p class="price">₹160</p>
         <div class="quantity-control">
           <label for="mocha-qty">Qty:</label>
           <select id="mocha-qty">
             <option>1</option><option>2</option><option>3</option><option>4</option>
           </select>
         </div>
-        <div class="action-buttons">
-          <button class="add-cart" data-name="Mocha" data-price="4.8" data-img="images/coffee4.png">Add to Cart</button>
-          <button class="buy-now" data-name="Mocha" data-price="4.8" data-img="images/coffee4.png">Buy Now</button>
+        <div class="action-buttons" style="margin-top:10px;">
+          <button class="btn-primary add-cart" 
+                  data-name="Mocha" 
+                  data-price="160" 
+                  data-img="images/coffee4.png">
+            Add to Cart
+          </button>
+          <button class="btn-secondary buy-now">Buy Now</button>
         </div>
       </div>
 
@@ -96,7 +118,7 @@
     <p>© 2025 Coffee Haven | Freshly brewed happiness ☕</p>
   </footer>
 
-  <!-- ===== Scripts ===== -->
+  <!-- ===== Script ===== -->
   <script src="js/script.js"></script>
 </body>
 </html>
