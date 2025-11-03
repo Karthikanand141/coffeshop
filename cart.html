@@ -6,7 +6,7 @@
   <title>Coffee Haven | Cart</title>
   <link rel="stylesheet" href="css/style.css" />
   <style>
-    /* ===== Navbar Sign-In Button ===== */
+    /* Navbar Sign-In Button */
     #signin-link {
       background-color: #6f4e37;
       color: white;
@@ -18,7 +18,7 @@
     }
     #signin-link:hover { background-color: #8b5e3b; }
 
-    /* ===== Modal Overlay ===== */
+    /* Modal Overlay */
     .modal {
       display: none;
       position: fixed;
@@ -56,7 +56,7 @@
       to { opacity: 1; transform: scale(1); }
     }
 
-    /* ===== Cart Layout ===== */
+    /* Cart Layout */
     .cart-container {
       max-width: 900px;
       margin: 100px auto 50px;
@@ -131,7 +131,7 @@
 </head>
 <body>
 
-  <!-- ===== Header / Navbar ===== -->
+  <!-- Header -->
   <header>
     <a href="index.html" class="logo">☕ Coffee Haven</a>
     <nav class="navbar">
@@ -142,14 +142,14 @@
     </nav>
   </header>
 
-  <!-- ===== Cart Section ===== -->
+  <!-- Cart Section -->
   <div class="cart-container">
     <h2>Your Cart</h2>
     <div id="cart-items"></div>
     <div class="cart-total" id="cart-total"></div>
   </div>
 
-  <!-- ===== Sign In Modal ===== -->
+  <!-- Sign In Modal -->
   <div id="signin-modal" class="modal">
     <div class="modal-content">
       <span class="close-btn">&times;</span>
@@ -160,7 +160,7 @@
     </div>
   </div>
 
-  <!-- ===== Footer ===== -->
+  <!-- Footer -->
   <footer>
     <p>© 2025 Coffee Haven | Freshly brewed happiness ☕</p>
   </footer>
@@ -204,7 +204,7 @@
     });
 
     // ==== Cart Display ====
-    const cartItems = JSON.parse(localStorage.getItem("cart") || "[]");
+    let cartItems = JSON.parse(localStorage.getItem("cart") || "[]");
     const cartContainer = document.getElementById("cart-items");
     const cartTotalEl = document.getElementById("cart-total");
     const cartCount = document.getElementById("cart-count");
@@ -222,7 +222,7 @@
         total += item.price * item.quantity;
         return `
           <div class="cart-item">
-            <img src="${item.img}" alt="${item.name}">
+            <img src="${item.image}" alt="${item.name}">
             <div class="cart-item-details">
               <span class="cart-item-name">${item.name}</span>
               <span class="cart-item-price">₹${item.price.toFixed(2)}</span>
