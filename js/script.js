@@ -1,32 +1,58 @@
-// Handle cart counter in navbar
+// -----------------------------
+// COFFEE SHOP - script.js
+// Handles menu Add to Cart + Navbar Cart Count
+// -----------------------------
+
+// Load existing cart or create empty one
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
+// Function to update cart count in navbar
 function updateCartCount() {
-  document.getElementById("cart-count").textContent = cart.length;
+  const cartCount = document.querySelector("#cart-count");
+  if (cartCount) {
+    cartCount.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
+  }
 }
 
-document.addEventListener("DOMContentLoaded", () => {
+// Call it on page load
+updateCartCount();
+
+// Function to add product to cart
+function addToCart(productId, name, price, image) {
+  const existingItem = cart.find(item => item.id === productId);
+  const quantityDropdown = document.querySelector(`#quantity-${productId}`);
+  const quantity = parseInt(quantityDropdown.value);
+
+  if (existingItem) {
+    existingItem.quantity += quantity;
+  } else {
+    cart.push({
+      id: productId,
+      name,
+      price,
+      image,
+      quantity
+    });
+  }
+
+  localStorage.setItem("cart", JSON.stringify(cart));
   updateCartCount();
 
-  const addButtons = document.querySelectorAll(".add-to-cart");
-  addButtons.forEach(button => {
-    button.addEventListener("click", (e) => {
-      const item = e.target.closest(".menu-item");
-      const title = item.querySelector("h3").textContent;
-      const price = parseFloat(item.querySelector("p").textContent.replace("₹", ""));
-      const quantity = parseInt(item.querySelector("select").value);
-      const image = item.querySelector("img").src;
+  // Redirect to cart page
+  window.location.href = "cart.html";
+}
 
-      const existing = cart.find(c => c.title === title);
-      if (existing) {
-        existing.quantity += quantity;
-      } else {
-        cart.push({ title, price, quantity, image });
-      }
-
-      localStorage.setItem("cart", JSON.stringify(cart));
-      updateCartCount();
-      window.location.href = "cart.html"; // Redirect to cart
-    });
-  });
-});
+// -----------------------------
+// BUY NOW (Just like add to cart but goes directly)
+// -----------------------------
+function buyNow(productId, name, price, image) {
+  const order = [{
+    id: productId,
+    name,
+    price,
+    image,
+    quantity: 1
+  }];
+  localStorage.setItem("cart", JSON.stringify(order));
+  window.location.href = "cart.html";
+}
