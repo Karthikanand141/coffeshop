@@ -5,6 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Coffee Haven | Menu</title>
   <link rel="stylesheet" href="css/style.css" />
+  <style>
+    /* ====== Extra styles for Sign In button ====== */
+    #signin-link {
+      background-color: #6f4e37;
+      color: white;
+      padding: 6px 12px;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+    #signin-link:hover {
+      background-color: #8b5e3b;
+    }
+  </style>
 </head>
 <body>
 
@@ -15,6 +29,7 @@
       <a href="index.html">Home</a>
       <a href="menu.html" class="active">Menu</a>
       <a href="cart.html">Cart <span id="cart-count">0</span></a>
+      <a href="signin.html" id="signin-link">Sign In</a>
     </nav>
   </header>
 
@@ -98,5 +113,21 @@
 
   <!-- ===== Scripts ===== -->
   <script src="js/script.js"></script>
+  <script>
+    // ===== Sign In / Sign Out Logic =====
+    const signinLink = document.getElementById("signin-link");
+    const user = localStorage.getItem("user");
+
+    if (user && signinLink) {
+      signinLink.textContent = "Hello, " + user.split("@")[0];
+      signinLink.href = "#";
+      signinLink.addEventListener("click", () => {
+        if (confirm("Sign out?")) {
+          localStorage.removeItem("user");
+          location.reload();
+        }
+      });
+    }
+  </script>
 </body>
 </html>
