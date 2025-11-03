@@ -1,1 +1,166 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  background-color: #fffdf9;
+  color: #333;
+}
+
+/* Header */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 8%;
+  background: #4b2c20;
+  color: white;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.logo {
+  font-size: 22px;
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.navbar a {
+  color: white;
+  margin-left: 25px;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.navbar a.active,
+.navbar a:hover {
+  color: #f8d7b5;
+}
+
+/* Home Section */
+.home {
+  background: url("../images/coffee1.png") no-repeat center/cover;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.home .content {
+  background: rgba(0, 0, 0, 0.6);
+  padding: 40px;
+  border-radius: 10px;
+  color: white;
+}
+
+.btn {
+  display: inline-block;
+  margin-top: 15px;
+  background: #d4a373;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: 0.3s;
+}
+.btn:hover {
+  background: #b07b4e;
+}
+
+/* Menu */
+.menu {
+  padding: 50px 8%;
+  text-align: center;
+}
+
+.menu h2 {
+  font-size: 2rem;
+  margin-bottom: 30px;
+  color: #4b2c20;
+}
+
+.menu-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.menu-item {
+  background: #fff;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.menu-item img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+.menu-item h3 {
+  margin-top: 10px;
+}
+
+.add-cart {
+  margin-top: 10px;
+  background: #4b2c20;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.add-cart:hover {
+  background: #d4a373;
+}
+
+/* Cart */
+.cart-page {
+  padding: 50px 8%;
+  text-align: center;
+}
+
+#cart-items {
+  margin: 30px auto;
+  max-width: 500px;
+  text-align: left;
+}
+
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.cart-total {
+  margin-top: 30px;
+}
+
+#checkout-btn {
+  background: #4b2c20;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+#checkout-btn:hover {
+  background: #d4a373;
+}
+
+/* Footer */
+footer {
+  background: #4b2c20;
+  color: white;
+  text-align: center;
+  padding: 15px 0;
+  margin-top: 50px;
+}
 
