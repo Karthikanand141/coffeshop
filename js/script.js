@@ -1,47 +1,32 @@
 document.addEventListener("DOMContentLoaded", () => {
+  const addButtons = document.querySelectorAll(".add-cart");
   const cartCount = document.getElementById("cart-count");
-  const cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-  // Update cart count in navbar
-  const updateCartCount = () => {
+  function updateCartCount() {
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
     const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
     cartCount.textContent = totalItems;
-  };
-  updateCartCount();
+  }
 
-  // Quantity +/- logic
-  document.querySelectorAll(".menu-item").forEach(item => {
-    const minusBtn = item.querySelector(".minus");
-    const plusBtn = item.querySelector(".plus");
-    const quantityDisplay = item.querySelector(".quantity");
-    let quantity = 1;
+  addButtons.forEach(btn => {
+    btn.addEventListener("click", () => {
+      const name = btn.dataset.name;
+      const price = parseFloat(btn.dataset.price);
+      const img = btn.dataset.img;
 
-    minusBtn.addEventListener("click", () => {
-      if (quantity > 1) quantity--;
-      quantityDisplay.textContent = quantity;
-    });
-
-    plusBtn.addEventListener("click", () => {
-      quantity++;
-      quantityDisplay.textContent = quantity;
-    });
-
-    // Add to Cart button
-    item.querySelector(".add-to-cart").addEventListener("click", () => {
-      const name = item.dataset.name;
-      const price = parseFloat(item.dataset.price);
-
-      const existingItem = cart.find(p => p.name === name);
-      if (existingItem) {
-        existingItem.quantity += quantity;
+      let cart = JSON.parse(localStorage.getItem("cart")) || [];
+      const existing = cart.find(item => item.name === name);
+      if (existing) {
+        existing.quantity++;
       } else {
-        cart.push({ name, price, quantity });
+        cart.push({ name, price, img, quantity: 1 });
       }
 
       localStorage.setItem("cart", JSON.stringify(cart));
       updateCartCount();
-      quantity = 1;
-      quantityDisplay.textContent = "1";
+      window.location.href = "cart.html"; // redirect to cart
     });
   });
+
+  updateCartCount();
 });
