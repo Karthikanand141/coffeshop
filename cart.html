@@ -28,8 +28,6 @@
       background-color: rgba(0,0,0,0.5);
       justify-content: center; align-items: center;
     }
-
-    /* ===== Modal Box ===== */
     .modal-content {
       background: #fff;
       padding: 25px 30px;
@@ -39,7 +37,6 @@
       box-shadow: 0 5px 15px rgba(0,0,0,0.3);
       animation: fadeIn 0.3s ease;
     }
-
     .modal-content h2 { margin-bottom: 15px; color: #6f4e37; }
     .modal-content input {
       width: 100%; padding: 10px;
@@ -61,7 +58,7 @@
 
     /* ===== Cart Layout ===== */
     .cart-container {
-      max-width: 800px;
+      max-width: 900px;
       margin: 100px auto 50px;
       background: #fff;
       padding: 20px;
@@ -73,18 +70,57 @@
       color: #6f4e37;
       margin-bottom: 20px;
     }
+
     .cart-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 15px;
+      border-bottom: 1px solid #eee;
+    }
+    .cart-item img {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-right: 20px;
+    }
+    .cart-item-details {
+      flex: 1;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 12px 0;
-      border-bottom: 1px solid #eee;
     }
-    .cart-item:last-child { border-bottom: none; }
+    .cart-item-name {
+      font-weight: 600;
+      color: #333;
+    }
+    .cart-item-price {
+      color: #6f4e37;
+      font-weight: bold;
+    }
+    .cart-item-qty {
+      margin: 0 10px;
+      border-radius: 5px;
+      padding: 4px;
+    }
+    .remove-btn {
+      background: #d9534f;
+      color: #fff;
+      border: none;
+      padding: 6px 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .remove-btn:hover { background: #c9302c; }
+
     .cart-total {
       text-align: right;
       font-weight: bold;
-      margin-top: 20px;
+      margin-top: 25px;
+      font-size: 18px;
+      color: #6f4e37;
     }
     .empty-msg {
       text-align: center;
@@ -173,23 +209,54 @@
     const cartTotalEl = document.getElementById("cart-total");
     const cartCount = document.getElementById("cart-count");
 
-    if (cartItems.length === 0) {
-      cartContainer.innerHTML = "<p class='empty-msg'>Your cart is empty ☕</p>";
-      cartTotalEl.textContent = "";
-    } else {
+    function renderCart() {
+      if (cartItems.length === 0) {
+        cartContainer.innerHTML = "<p class='empty-msg'>Your cart is empty ☕</p>";
+        cartTotalEl.textContent = "";
+        cartCount.textContent = "0";
+        return;
+      }
+
       let total = 0;
       cartContainer.innerHTML = cartItems.map((item, i) => {
         total += item.price * item.quantity;
         return `
           <div class="cart-item">
-            <span>${item.name} × ${item.quantity}</span>
-            <span>₹${(item.price * item.quantity).toFixed(2)}</span>
+            <img src="${item.img}" alt="${item.name}">
+            <div class="cart-item-details">
+              <span class="cart-item-name">${item.name}</span>
+              <span class="cart-item-price">₹${item.price.toFixed(2)}</span>
+              <select class="cart-item-qty" data-index="${i}">
+                ${[1,2,3,4,5].map(q => `<option ${q===item.quantity?'selected':''}>${q}</option>`).join('')}
+              </select>
+              <button class="remove-btn" data-index="${i}">Remove</button>
+            </div>
           </div>`;
       }).join("");
+
       cartTotalEl.textContent = "Total: ₹" + total.toFixed(2);
+      cartCount.textContent = cartItems.length;
+
+      document.querySelectorAll(".remove-btn").forEach(btn => {
+        btn.addEventListener("click", e => {
+          const i = e.target.dataset.index;
+          cartItems.splice(i, 1);
+          localStorage.setItem("cart", JSON.stringify(cartItems));
+          renderCart();
+        });
+      });
+
+      document.querySelectorAll(".cart-item-qty").forEach(sel => {
+        sel.addEventListener("change", e => {
+          const i = e.target.dataset.index;
+          cartItems[i].quantity = parseInt(e.target.value);
+          localStorage.setItem("cart", JSON.stringify(cartItems));
+          renderCart();
+        });
+      });
     }
 
-    cartCount.textContent = cartItems.length;
+    renderCart();
   </script>
 </body>
 </html>
