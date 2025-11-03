@@ -1,86 +1,85 @@
-// -----------------------------
-// COFFEE SHOP - cart.js
-// Handles Cart Page: display, update, remove, total
-// -----------------------------
-
+// ======== Load Cart Data from localStorage ========
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-const cartContainer = document.querySelector("#cart-items");
-const totalElement = document.querySelector("#cart-total");
+const cartContainer = document.getElementById("cart-items");
+const cartTotal = document.getElementById("cart-total");
+const cartCountEl = document.getElementById("cart-count");
 
-// Function to render cart
+// Update Cart Display
 function renderCart() {
   cartContainer.innerHTML = "";
+  let total = 0;
 
   if (cart.length === 0) {
-    cartContainer.innerHTML = `
-      <div class="empty-cart">
-        <p>Your cart is empty ☕</p>
-        <a href="menu.html" class="btn">Go to Menu</a>
-      </div>`;
-    totalElement.textContent = "₹0";
+    cartContainer.innerHTML = `<p>Your cart is empty ☕</p>`;
+    cartTotal.textContent = "₹0";
+    cartCountEl.textContent = 0;
     return;
   }
 
   cart.forEach((item, index) => {
     const itemTotal = item.price * item.quantity;
+    total += itemTotal;
 
-    const cartItem = document.createElement("div");
-    cartItem.classList.add("cart-item");
-    cartItem.innerHTML = `
-      <img src="${item.image}" alt="${item.name}" class="cart-item-img">
-      <div class="cart-item-info">
-        <h3>${item.name}</h3>
-        <p>₹${item.price.toFixed(2)}</p>
-        <div class="quantity-control">
-          <button class="qty-btn" onclick="decreaseQuantity(${index})">-</button>
-          <span>${item.quantity}</span>
-          <button class="qty-btn" onclick="increaseQuantity(${index})">+</button>
-        </div>
-        <p class="subtotal">Subtotal: ₹${itemTotal.toFixed(2)}</p>
-        <button class="remove-btn" onclick="removeItem(${index})">Remove</button>
+    const div = document.createElement("div");
+    div.classList.add("cart-item");
+    div.innerHTML = `
+      <img src="${item.image}" alt="${item.name}">
+      <div class="item-details">
+        <h4>${item.name}</h4>
+        <p>₹${item.price} each</p>
+      </div>
+      <div class="item-actions">
+        <select class="qty-select" data-index="${index}">
+          ${[...Array(10).keys()].map(i => {
+            const qty = i + 1;
+            return `<option value="${qty}" ${qty === item.quantity ? "selected" : ""}>${qty}</option>`;
+          }).join("")}
+        </select>
+        <button class="remove-btn" data-index="${index}">Remove</button>
       </div>
     `;
-
-    cartContainer.appendChild(cartItem);
+    cartContainer.appendChild(div);
   });
 
-  updateTotal();
-}
+  cartTotal.textContent = `₹${total}`;
+  cartCountEl.textContent = cart.length;
 
-// Update total amount
-function updateTotal() {
-  const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  totalElement.textContent = `₹${total.toFixed(2)}`;
   localStorage.setItem("cart", JSON.stringify(cart));
+}
 
-  // Update navbar cart count (if exists)
-  const cartCount = document.querySelector("#cart-count");
-  if (cartCount) {
-    cartCount.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
+// ======== Handle Quantity Change ========
+cartContainer.addEventListener("change", (e) => {
+  if (e.target.classList.contains("qty-select")) {
+    const index = e.target.dataset.index;
+    const newQty = parseInt(e.target.value);
+    cart[index].quantity = newQty;
+    localStorage.setItem("cart", JSON.stringify(cart));
+    renderCart();
   }
-}
+});
 
-// Quantity functions
-function increaseQuantity(index) {
-  cart[index].quantity++;
-  renderCart();
-}
-
-function decreaseQuantity(index) {
-  if (cart[index].quantity > 1) {
-    cart[index].quantity--;
-  } else {
+// ======== Handle Remove Button ========
+cartContainer.addEventListener("click", (e) => {
+  if (e.target.classList.contains("remove-btn")) {
+    const index = e.target.dataset.index;
     cart.splice(index, 1);
+    localStorage.setItem("cart", JSON.stringify(cart));
+    renderCart();
   }
-  renderCart();
-}
+});
 
-// Remove product completely
-function removeItem(index) {
-  cart.splice(index, 1);
-  renderCart();
-}
+// ======== Checkout Button ========
+document.getElementById("checkout-btn").addEventListener("click", () => {
+  if (cart.length === 0) {
+    alert("Your cart is empty!");
+  } else {
+    alert("Thank you for your order! ☕ Your coffee is on the way!");
+    localStorage.removeItem("cart");
+    cart = [];
+    renderCart();
+  }
+});
 
-// Run on page load
+// ======== Initialize ========
 renderCart();
