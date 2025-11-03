@@ -164,3 +164,31 @@ footer {
   margin-top: 50px;
 }
 
+/* Cart quantity buttons */
+.qty-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.qty-controls button {
+  background: #4b2c20;
+  color: white;
+  border: none;
+  padding: 4px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.qty-controls button:hover {
+  background: #d4a373;
+}
+
+.qty-controls span {
+  min-width: 20px;
+  text-align: center;
+  display: inline-block;
+}
+
+
