@@ -3,39 +3,177 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Your Cart | Coffee Shop</title>
-  <link rel="stylesheet" href="css/style.css" />
-</head>
-<body>
+  <title>Your Cart | BookStore</title>
+  <link rel="stylesheet" href="css/styles.css" />
+  <style>
+    /* ===== Cart Page Styles ===== */
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #f8f9fa;
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
 
-  <!-- Header -->
+    header {
+      background: #800000;
+      color: white;
+      padding: 15px 0;
+      text-align: center;
+      font-size: 1.4em;
+      letter-spacing: 0.5px;
+      font-weight: 600;
+    }
+
+    .cart-container {
+      max-width: 1000px;
+      margin: 40px auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+
+    h2 {
+      text-align: center;
+      color: #444;
+      margin-bottom: 25px;
+      font-weight: 600;
+    }
+
+    #empty-cart {
+      display: none;
+      text-align: center;
+      color: #666;
+      font-size: 1.1em;
+      margin-top: 40px;
+    }
+
+    .cart-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #eee;
+      padding: 15px 0;
+    }
+
+    .cart-item-img {
+      width: 90px;
+      height: 110px;
+      object-fit: cover;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    .cart-item-details {
+      flex: 1;
+      margin-left: 20px;
+    }
+
+    .cart-item-details h3 {
+      margin: 0 0 5px;
+      font-size: 1.1em;
+      color: #222;
+    }
+
+    .cart-item-details p {
+      margin: 5px 0;
+    }
+
+    .cart-qty {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .qty-input {
+      width: 60px;
+      padding: 5px;
+      text-align: center;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+
+    .remove-btn {
+      background: #dc3545;
+      border: none;
+      color: white;
+      padding: 8px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .remove-btn:hover {
+      background: #b02a37;
+    }
+
+    .cart-summary {
+      margin-top: 25px;
+      text-align: right;
+    }
+
+    .cart-summary h3 {
+      font-size: 1.3em;
+      color: #111;
+    }
+
+    #checkout-btn {
+      background: #800000;
+      color: white;
+      border: none;
+      padding: 12px 22px;
+      font-size: 1em;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 15px;
+      transition: 0.3s;
+    }
+
+    #checkout-btn:hover {
+      background: #a00000;
+    }
+
+    @media (max-width: 768px) {
+      .cart-item {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .cart-item-img {
+        width: 100%;
+        height: auto;
+      }
+
+      .cart-item-details {
+        margin-left: 0;
+        width: 100%;
+      }
+
+      .cart-summary {
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+
+<body>
   <header>
-    <a href="index.html" class="logo">☕ Coffee Shop</a>
-    <nav class="navbar">
-      <a href="index.html">Home</a>
-      <a href="menu.html">Menu</a>
-      <a href="cart.html" class="active">Cart (<span id="cart-count">0</span>)</a>
-    </nav>
+    🛒 Your Shopping Cart
   </header>
 
-  <!-- Cart Page -->
-  <section class="cart-page">
-    <h2>Your Shopping Cart</h2>
+  <div class="cart-container">
+    <h2>Cart Summary</h2>
 
-    <div id="cart-items" class="cart-items-container">
-      <!-- Items dynamically added here -->
-    </div>
+    <div id="empty-cart">Your cart is currently empty.</div>
+
+    <div id="cart-items"></div>
 
     <div class="cart-summary">
       <h3>Total: <span id="cart-total">₹0</span></h3>
       <button id="checkout-btn">Proceed to Checkout</button>
     </div>
-  </section>
-
-  <!-- Footer -->
-  <footer>
-    <p>© 2025 Coffee Shop | Crafted with ☕ & ❤️</p>
-  </footer>
+  </div>
 
   <script src="js/cart.js"></script>
 </body>
