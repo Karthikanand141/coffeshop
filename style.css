@@ -1,75 +1,86 @@
-/* Existing styles remain... */
+/* Reset & base */
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+body { background: #fff; color: #333; line-height: 1.6; scroll-behavior: smooth; }
 
-.cart-icon {
-  font-size: 1.5rem;
-  cursor: pointer;
-  position: relative;
+/* Header */
+header {
+  position: fixed; top: 0; width: 100%; z-index: 100;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 20px 50px; background: #3e2723; color: #fff;
+}
+.logo { font-size: 1.5rem; text-decoration: none; color: #fff; font-weight: bold; }
+.logo span { color: #ffc107; }
+.navbar a {
+  color: #fff; margin-left: 20px; text-decoration: none; transition: color .3s;
+}
+.navbar a:hover { color: #ffc107; }
+.menu-toggle { display: none; font-size: 1.8rem; cursor: pointer; }
+
+/* Hero */
+.hero {
+  height: 100vh;
+  background: url('https://images.unsplash.com/photo-1498804103079-a6351b050096') center/cover no-repeat;
+  display: flex; align-items: center; justify-content: center; text-align: center; color: white;
+  padding: 0 20px;
+}
+.hero .content {
+  background: rgba(0,0,0,0.6); padding: 30px; border-radius: 10px; max-width: 600px;
+}
+.hero h1 { font-size: 2.5rem; margin-bottom: 15px; }
+.btn {
+  display: inline-block; background: #ffc107; color: #3e2723;
+  padding: 10px 20px; border-radius: 25px; text-decoration: none;
+  margin-top: 10px; transition: background .3s;
+}
+.btn:hover { background: #ffca28; }
+
+/* About */
+.about {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
+  padding: 100px 50px; background: #fff;
+}
+.about-img img { width: 320px; border-radius: 10px; }
+.about-text { max-width: 500px; margin-left: 40px; }
+.about-text h2 { color: #3e2723; margin-bottom: 15px; }
+
+/* Menu */
+.menu { text-align: center; padding: 100px 20px; background: #f7f7f7; }
+.menu h2 { color: #3e2723; margin-bottom: 40px; }
+.menu-container {
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 30px;
+}
+.menu-item {
+  background: #fff; padding: 20px; width: 250px; border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: transform .3s;
+}
+.menu-item:hover { transform: translateY(-5px); }
+.menu-item img { width: 100%; border-radius: 10px; margin-bottom: 10px; }
+.menu-item h3 { color: #3e2723; }
+
+/* Contact */
+.contact { text-align: center; padding: 100px 20px; }
+form {
+  max-width: 400px; margin: auto; display: flex; flex-direction: column; gap: 15px;
+}
+input, textarea {
+  padding: 10px; border-radius: 5px; border: 1px solid #ccc;
+}
+button.btn { cursor: pointer; border: none; }
+
+/* Footer */
+footer {
+  text-align: center; padding: 20px; background: #3e2723; color: #fff;
 }
 
-#cart-count {
-  background: #ffc107;
-  color: #3e2723;
-  font-size: 0.8rem;
-  border-radius: 50%;
-  padding: 2px 6px;
-  position: absolute;
-  top: -10px;
-  right: -10px;
-}
-
-/* Cart Popup */
-.cart-popup {
-  position: fixed;
-  top: 70px;
-  right: 20px;
-  width: 300px;
-  background: #fff;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-  padding: 20px;
-  display: none;
-  z-index: 1000;
-}
-
-.cart-popup.active {
-  display: block;
-}
-
-.cart-popup h2 {
-  margin-bottom: 10px;
-  color: #3e2723;
-}
-
-#cart-items {
-  list-style: none;
-  max-height: 200px;
-  overflow-y: auto;
-  margin-bottom: 10px;
-}
-
-#cart-items li {
-  display: flex;
-  justify-content: space-between;
-  margin: 5px 0;
-}
-
-.cart-total {
-  margin-top: 10px;
-  font-weight: bold;
-}
-
-#checkout-btn {
-  background: #ffc107;
-  border: none;
-  padding: 10px 15px;
-  border-radius: 5px;
-  cursor: pointer;
-  color: #3e2723;
-  font-weight: bold;
-  width: 100%;
-  margin-top: 10px;
-}
-
-#checkout-btn:hover {
-  background: #ffca28;
+/* Responsive */
+@media (max-width: 768px) {
+  header { padding: 20px; }
+  .menu-toggle { display: block; }
+  .navbar {
+    display: none; flex-direction: column; background: #4e342e;
+    position: absolute; top: 60px; right: 0; width: 200px;
+  }
+  .navbar.active { display: flex; }
+  .about { flex-direction: column; padding: 80px 20px; }
+  .about-text { margin: 20px 0 0 0; }
 }
