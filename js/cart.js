@@ -1,42 +1,26 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const addButtons = document.querySelectorAll(".add-cart");
+  const cartContainer = document.getElementById("cart-items");
+  const totalPrice = document.getElementById("total-price");
   const cartCount = document.getElementById("cart-count");
-  const cartItemsContainer = document.getElementById("cart-items");
-  const totalElement = document.getElementById("cart-total");
 
-  // Load existing cart from localStorage
-  let cart = JSON.parse(localStorage.getItem("cart")) || [];
-
-  // --- 1. Add to Cart buttons (menu page) ---
-  addButtons.forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const name = btn.dataset.name;
-      const price = parseFloat(btn.dataset.price);
-      const existing = cart.find((item) => item.name === name);
-
-      if (existing) existing.qty += 1;
-      else cart.push({ name, price, qty: 1 });
-
-      saveCart();
-      updateCartCount();
-      alert(`${name} added to cart!`);
-    });
-  });
-
-  // --- 2. Render cart (cart page) ---
-  if (cartItemsContainer) {
-    renderCart();
+  function updateCartCount(cart) {
+    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+    cartCount.textContent = totalItems;
   }
 
-  // --- 3. Render Function ---
+  function updateTotal(cart) {
+    const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    totalPrice.textContent = total.toFixed(2);
+  }
+
   function renderCart() {
-    cartItemsContainer.innerHTML = "";
-    let total = 0;
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    cartContainer.innerHTML = "";
 
     if (cart.length === 0) {
-      cartItemsContainer.innerHTML = "<p>Your cart is empty.</p>";
-      totalElement.textContent = "0.00";
-      updateCartCount();
+      cartContainer.innerHTML = "<p>Your cart is empty ☕</p>";
+      updateTotal(cart);
+      updateCartCount(cart);
       return;
     }
 
@@ -44,62 +28,39 @@ document.addEventListener("DOMContentLoaded", () => {
       const div = document.createElement("div");
       div.classList.add("cart-item");
       div.innerHTML = `
+        <img src="${item.img}" alt="${item.name}" width="60">
         <span>${item.name}</span>
         <div class="qty-controls">
-          <button class="decrease">−</button>
-          <span>${item.qty}</span>
-          <button class="increase">+</button>
+          <button class="decrease" data-index="${index}">-</button>
+          <span>${item.quantity}</span>
+          <button class="increase" data-index="${index}">+</button>
         </div>
-        <span>$${(item.price * item.qty).toFixed(2)}</span>
+        <span>$${(item.price * item.quantity).toFixed(2)}</span>
+        <button class="remove" data-index="${index}">Remove</button>
       `;
-
-      // Decrease
-      div.querySelector(".decrease").addEventListener("click", () => {
-        if (item.qty > 1) item.qty -= 1;
-        else cart.splice(index, 1);
-        saveCart();
-        renderCart();
-      });
-
-      // Increase
-      div.querySelector(".increase").addEventListener("click", () => {
-        item.qty += 1;
-        saveCart();
-        renderCart();
-      });
-
-      cartItemsContainer.appendChild(div);
-      total += item.price * item.qty;
+      cartContainer.appendChild(div);
     });
 
-    totalElement.textContent = total.toFixed(2);
-    updateCartCount();
+    updateTotal(cart);
+    updateCartCount(cart);
   }
 
-  // --- 4. Update cart count in navbar ---
-  function updateCartCount() {
-    if (cartCount) {
-      const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
-      cartCount.textContent = totalQty;
+  cartContainer.addEventListener("click", (e) => {
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const index = e.target.dataset.index;
+
+    if (e.target.classList.contains("increase")) {
+      cart[index].quantity++;
+    } else if (e.target.classList.contains("decrease")) {
+      cart[index].quantity--;
+      if (cart[index].quantity <= 0) cart.splice(index, 1);
+    } else if (e.target.classList.contains("remove")) {
+      cart.splice(index, 1);
     }
-  }
 
-  // --- 5. Save cart to localStorage ---
-  function saveCart() {
     localStorage.setItem("cart", JSON.stringify(cart));
-  }
+    renderCart();
+  });
 
-  // --- 6. Checkout ---
-  const checkoutBtn = document.getElementById("checkout-btn");
-  if (checkoutBtn) {
-    checkoutBtn.addEventListener("click", () => {
-      alert("Thank you for your order! ☕");
-      localStorage.removeItem("cart");
-      cart = [];
-      renderCart();
-    });
-  }
-
-  // Show count on every page
-  updateCartCount();
+  renderCart();
 });
