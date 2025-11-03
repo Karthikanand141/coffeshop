@@ -1,56 +1,86 @@
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
-const cartContainer = document.querySelector(".cart-container");
+// -----------------------------
+// COFFEE SHOP - cart.js
+// Handles Cart Page: display, update, remove, total
+// -----------------------------
 
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+const cartContainer = document.querySelector("#cart-items");
+const totalElement = document.querySelector("#cart-total");
+
+// Function to render cart
 function renderCart() {
   cartContainer.innerHTML = "";
 
   if (cart.length === 0) {
-    cartContainer.innerHTML = "<h3>Your cart is empty!</h3>";
-    document.getElementById("cart-count").textContent = 0;
+    cartContainer.innerHTML = `
+      <div class="empty-cart">
+        <p>Your cart is empty ☕</p>
+        <a href="menu.html" class="btn">Go to Menu</a>
+      </div>`;
+    totalElement.textContent = "₹0";
     return;
   }
 
-  let total = 0;
   cart.forEach((item, index) => {
-    total += item.price * item.quantity;
+    const itemTotal = item.price * item.quantity;
 
-    const div = document.createElement("div");
-    div.classList.add("cart-item");
-    div.innerHTML = `
-      <img src="${item.image}" alt="${item.title}">
-      <div class="cart-details">
-        <h4>${item.title}</h4>
-        <p>₹${item.price}</p>
-        <div class="cart-quantity">
-          <button onclick="changeQuantity(${index}, -1)">-</button>
+    const cartItem = document.createElement("div");
+    cartItem.classList.add("cart-item");
+    cartItem.innerHTML = `
+      <img src="${item.image}" alt="${item.name}" class="cart-item-img">
+      <div class="cart-item-info">
+        <h3>${item.name}</h3>
+        <p>₹${item.price.toFixed(2)}</p>
+        <div class="quantity-control">
+          <button class="qty-btn" onclick="decreaseQuantity(${index})">-</button>
           <span>${item.quantity}</span>
-          <button onclick="changeQuantity(${index}, 1)">+</button>
+          <button class="qty-btn" onclick="increaseQuantity(${index})">+</button>
         </div>
+        <p class="subtotal">Subtotal: ₹${itemTotal.toFixed(2)}</p>
+        <button class="remove-btn" onclick="removeItem(${index})">Remove</button>
       </div>
-      <button class="remove-btn" onclick="removeItem(${index})">Remove</button>
     `;
-    cartContainer.appendChild(div);
+
+    cartContainer.appendChild(cartItem);
   });
 
-  const totalDiv = document.createElement("div");
-  totalDiv.classList.add("cart-total");
-  totalDiv.textContent = `Total: ₹${total.toFixed(2)}`;
-  cartContainer.appendChild(totalDiv);
-
-  document.getElementById("cart-count").textContent = cart.length;
+  updateTotal();
 }
 
-function changeQuantity(index, delta) {
-  cart[index].quantity += delta;
-  if (cart[index].quantity <= 0) cart.splice(index, 1);
+// Update total amount
+function updateTotal() {
+  const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  totalElement.textContent = `₹${total.toFixed(2)}`;
   localStorage.setItem("cart", JSON.stringify(cart));
+
+  // Update navbar cart count (if exists)
+  const cartCount = document.querySelector("#cart-count");
+  if (cartCount) {
+    cartCount.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
+  }
+}
+
+// Quantity functions
+function increaseQuantity(index) {
+  cart[index].quantity++;
   renderCart();
 }
 
+function decreaseQuantity(index) {
+  if (cart[index].quantity > 1) {
+    cart[index].quantity--;
+  } else {
+    cart.splice(index, 1);
+  }
+  renderCart();
+}
+
+// Remove product completely
 function removeItem(index) {
   cart.splice(index, 1);
-  localStorage.setItem("cart", JSON.stringify(cart));
   renderCart();
 }
 
-document.addEventListener("DOMContentLoaded", renderCart);
+// Run on page load
+renderCart();
