@@ -3,31 +3,31 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Your Cart | Coffee Bliss</title>
+  <title>Your Cart | Coffee Haven</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <!-- Navbar -->
-  <header class="navbar">
-    <div class="logo">☕ Coffee Bliss</div>
-    <nav>
+
+  <header>
+    <a href="index.html" class="logo">☕ Coffee Haven</a>
+    <nav class="navbar">
       <a href="index.html">Home</a>
       <a href="menu.html">Menu</a>
       <a href="cart.html" class="active">Cart (<span id="cart-count">0</span>)</a>
     </nav>
   </header>
 
-  <main class="cart-container">
+  <section class="cart-page">
     <h2>Your Cart</h2>
     <div id="cart-items"></div>
-    <div class="cart-summary">
+    <div class="cart-total">
       <h3>Total: $<span id="cart-total">0.00</span></h3>
-      <button class="checkout-btn">Checkout</button>
+      <button id="checkout-btn">Proceed to Checkout</button>
     </div>
-  </main>
+  </section>
 
-  <footer class="footer">
-    © 2025 Coffee Bliss | Enjoy your brew ☕
+  <footer>
+    <p>© 2025 Coffee Haven. All rights reserved.</p>
   </footer>
 
   <script src="js/cart.js"></script>
