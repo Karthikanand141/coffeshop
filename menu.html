@@ -1,105 +1,113 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Menu | Coffee Haven</title>
-  <link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Coffee Shop | Menu</title>
+  <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
+  <!-- ===== Navigation ===== -->
+  <nav>
+    <div class="logo">☕ Coffee Haven</div>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="menu.html">Menu</a></li>
+      <li>
+        <a href="cart.html">
+          Cart <span id="cart-count" class="cart-count">0</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
 
-  <header>
-    <a href="index.html" class="logo">☕ Coffee Haven</a>
-    <nav class="navbar">
-      <a href="index.html">Home</a>
-      <a href="menu.html" class="active">Menu</a>
-      <a href="cart.html">Cart (<span id="cart-count">0</span>)</a>
-    </nav>
-  </header>
-
-  <section class="menu">
-    <h2>Our Coffee Menu</h2>
-    <div class="menu-container">
-
-      <div class="menu-item">
-        <img src="images/coffee1.png" alt="Espresso">
-        <h3>Espresso</h3>
-        <p>$3.00</p>
-        <div class="quantity-select">
-          <label>Qty:</label>
-          <select id="qty-espresso" class="qty-dropdown">
-            <option>1</option><option>2</option><option>3</option><option>4</option>
-            <option>5</option><option>6</option><option>7</option><option>8</option>
-            <option>9</option><option>10</option>
-          </select>
-        </div>
-        <div class="product-actions">
-          <button class="add-cart" onclick="addToCartWithQty('Espresso', 3.00, 'images/coffee1.png', 'qty-espresso')">Add to Cart</button>
-          <button class="buy-now" onclick="buyNowWithQty('Espresso', 3.00, 'images/coffee1.png', 'qty-espresso')">Buy Now</button>
-        </div>
+  <!-- ===== Menu Section ===== -->
+  <section class="menu-container">
+    <!-- Item 1 -->
+    <div class="menu-item">
+      <img src="images/coffee1.png" alt="Espresso">
+      <h3>Classic Espresso</h3>
+      <p>₹120</p>
+      <label for="qty1">Quantity:</label>
+      <select id="qty1">
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+        <option>5</option>
+        <option>6</option>
+        <option>7</option>
+        <option>8</option>
+        <option>9</option>
+        <option>10</option>
+      </select>
+      <div class="menu-buttons">
+        <button class="add-to-cart">Add to Cart</button>
+        <button class="buy-now" onclick="buyNow('Classic Espresso',120,'images/coffee1.png')">Buy Now</button>
       </div>
+    </div>
 
-      <div class="menu-item">
-        <img src="images/coffee2.png" alt="Cappuccino">
-        <h3>Cappuccino</h3>
-        <p>$4.50</p>
-        <div class="quantity-select">
-          <label>Qty:</label>
-          <select id="qty-cappuccino" class="qty-dropdown">
-            <option>1</option><option>2</option><option>3</option><option>4</option>
-            <option>5</option><option>6</option><option>7</option><option>8</option>
-            <option>9</option><option>10</option>
-          </select>
-        </div>
-        <div class="product-actions">
-          <button class="add-cart" onclick="addToCartWithQty('Cappuccino', 4.50, 'images/coffee2.png', 'qty-cappuccino')">Add to Cart</button>
-          <button class="buy-now" onclick="buyNowWithQty('Cappuccino', 4.50, 'images/coffee2.png', 'qty-cappuccino')">Buy Now</button>
-        </div>
+    <!-- Item 2 -->
+    <div class="menu-item">
+      <img src="images/coffee2.png" alt="Cappuccino">
+      <h3>Creamy Cappuccino</h3>
+      <p>₹150</p>
+      <label for="qty2">Quantity:</label>
+      <select id="qty2">
+        <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
+        <option>6</option><option>7</option><option>8</option><option>9</option><option>10</option>
+      </select>
+      <div class="menu-buttons">
+        <button class="add-to-cart">Add to Cart</button>
+        <button class="buy-now" onclick="buyNow('Creamy Cappuccino',150,'images/coffee2.png')">Buy Now</button>
       </div>
+    </div>
 
-      <div class="menu-item">
-        <img src="images/coffee3.png" alt="Latte">
-        <h3>Latte</h3>
-        <p>$4.00</p>
-        <div class="quantity-select">
-          <label>Qty:</label>
-          <select id="qty-latte" class="qty-dropdown">
-            <option>1</option><option>2</option><option>3</option><option>4</option>
-            <option>5</option><option>6</option><option>7</option><option>8</option>
-            <option>9</option><option>10</option>
-          </select>
-        </div>
-        <div class="product-actions">
-          <button class="add-cart" onclick="addToCartWithQty('Latte', 4.00, 'images/coffee3.png', 'qty-latte')">Add to Cart</button>
-          <button class="buy-now" onclick="buyNowWithQty('Latte', 4.00, 'images/coffee3.png', 'qty-latte')">Buy Now</button>
-        </div>
+    <!-- Item 3 -->
+    <div class="menu-item">
+      <img src="images/coffee3.png" alt="Latte">
+      <h3>Vanilla Latte</h3>
+      <p>₹180</p>
+      <label for="qty3">Quantity:</label>
+      <select id="qty3">
+        <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
+        <option>6</option><option>7</option><option>8</option><option>9</option><option>10</option>
+      </select>
+      <div class="menu-buttons">
+        <button class="add-to-cart">Add to Cart</button>
+        <button class="buy-now" onclick="buyNow('Vanilla Latte',180,'images/coffee3.png')">Buy Now</button>
       </div>
+    </div>
 
-      <div class="menu-item">
-        <img src="images/coffee4.png" alt="Mocha">
-        <h3>Mocha</h3>
-        <p>$4.80</p>
-        <div class="quantity-select">
-          <label>Qty:</label>
-          <select id="qty-mocha" class="qty-dropdown">
-            <option>1</option><option>2</option><option>3</option><option>4</option>
-            <option>5</option><option>6</option><option>7</option><option>8</option>
-            <option>9</option><option>10</option>
-          </select>
-        </div>
-        <div class="product-actions">
-          <button class="add-cart" onclick="addToCartWithQty('Mocha', 4.80, 'images/coffee4.png', 'qty-mocha')">Add to Cart</button>
-          <button class="buy-now" onclick="buyNowWithQty('Mocha', 4.80, 'images/coffee4.png', 'qty-mocha')">Buy Now</button>
-        </div>
+    <!-- Item 4 -->
+    <div class="menu-item">
+      <img src="images/coffee4.png" alt="Mocha">
+      <h3>Mocha Delight</h3>
+      <p>₹200</p>
+      <label for="qty4">Quantity:</label>
+      <select id="qty4">
+        <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
+        <option>6</option><option>7</option><option>8</option><option>9</option><option>10</option>
+      </select>
+      <div class="menu-buttons">
+        <button class="add-to-cart">Add to Cart</button>
+        <button class="buy-now" onclick="buyNow('Mocha Delight',200,'images/coffee4.png')">Buy Now</button>
       </div>
-
     </div>
   </section>
 
   <footer>
-    <p>© 2025 Coffee Haven. All rights reserved.</p>
+    <p>© 2025 Coffee Haven | Freshly brewed happiness ☕</p>
   </footer>
 
   <script src="js/script.js"></script>
+  <script>
+    // Buy Now logic
+    function buyNow(title, price, image) {
+      const cart = [{ title, price, quantity: 1, image }];
+      localStorage.setItem("cart", JSON.stringify(cart));
+      window.location.href = "cart.html";
+    }
+  </script>
 </body>
 </html>
