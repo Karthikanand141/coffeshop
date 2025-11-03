@@ -5,7 +5,8 @@ let cart = JSON.parse(localStorage.getItem("cart")) || [];
 function updateCartCount() {
   const cartCountEl = document.getElementById("cart-count");
   if (cartCountEl) {
-    cartCountEl.textContent = cart.length;
+    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+    cartCountEl.textContent = totalItems;
   }
 }
 updateCartCount();
@@ -21,11 +22,12 @@ function addToCart(product) {
 
   localStorage.setItem("cart", JSON.stringify(cart));
   updateCartCount();
-  alert(`${product.name} added to cart!`);
+  alert(`${product.quantity} × ${product.name} added to cart!`);
 }
 
 // ======== Buy Now Function ========
 function buyNow(product) {
+  // Save only the selected item for quick purchase
   localStorage.setItem("cart", JSON.stringify([product]));
   window.location.href = "cart.html";
 }
@@ -34,9 +36,13 @@ function buyNow(product) {
 document.addEventListener("click", (e) => {
   if (e.target.classList.contains("add-cart") || e.target.classList.contains("buy-now")) {
     const menuItem = e.target.closest(".menu-item");
-    const name = menuItem.querySelector("h3").textContent;
-    const price = parseInt(menuItem.querySelector(".price").textContent.replace("₹", ""));
-    const image = menuItem.querySelector("img").src;
+    const name = menuItem.querySelector("h3").textContent.trim();
+
+    // Support both $ and ₹ symbols
+    const priceText = menuItem.querySelector(".price").textContent.trim();
+    const price = parseFloat(priceText.replace(/[₹$]/g, ""));
+
+    const image = menuItem.querySelector("img").getAttribute("src");
     const quantity = parseInt(menuItem.querySelector(".quantity-control select").value);
 
     const product = { name, price, image, quantity };
