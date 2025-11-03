@@ -1,33 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Your Cart | Coffee Haven</title>
-  <link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Coffee Haven | Cart</title>
+  <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
+  <!-- ===== Navigation ===== -->
+  <nav>
+    <div class="logo">☕ Coffee Haven</div>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="menu.html">Menu</a></li>
+      <li>
+        <a href="cart.html" class="active">
+          Cart <span id="cart-count" class="cart-count">0</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
 
-  <header>
-    <a href="index.html" class="logo">☕ Coffee Haven</a>
-    <nav class="navbar">
-      <a href="index.html">Home</a>
-      <a href="menu.html">Menu</a>
-      <a href="cart.html" class="active">Cart (<span id="cart-count">0</span>)</a>
-    </nav>
-  </header>
+  <!-- ===== Cart Section ===== -->
+  <section class="cart-section">
+    <h2>Your Cart</h2>
+    <div id="cart-container" class="cart-container"></div>
 
-  <section class="cart-page">
-    <h2>Your Shopping Cart</h2>
-    <div id="cart-items"></div>
-    <div class="cart-total">
-      <h3>Total: $<span id="cart-total">0.00</span></h3>
+    <div class="cart-summary">
+      <h3>Total: ₹<span id="total-amount">0</span></h3>
       <button id="checkout-btn">Proceed to Checkout</button>
     </div>
   </section>
 
   <footer>
-    <p>© 2025 Coffee Haven. All rights reserved.</p>
+    <p>© 2025 Coffee Haven | Freshly brewed happiness ☕</p>
   </footer>
 
   <script src="js/cart.js"></script>
