@@ -1,32 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Coffee Haven</title>
-  <link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Coffee Haven | Home</title>
+  <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
+  <!-- ===== Navigation ===== -->
+  <nav>
+    <div class="logo">☕ Coffee Haven</div>
+    <ul>
+      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="menu.html">Menu</a></li>
+      <li>
+        <a href="cart.html">
+          Cart <span id="cart-count" class="cart-count">0</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
 
-  <header>
-    <a href="index.html" class="logo">☕ Coffee Haven</a>
-    <nav class="navbar">
-      <a href="index.html" class="active">Home</a>
-      <a href="menu.html">Menu</a>
-      <a href="cart.html">Cart (<span id="cart-count">0</span>)</a>
-    </nav>
-  </header>
+  <!-- ===== Hero Section ===== -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Welcome to Coffee Haven</h1>
+      <p>Your daily dose of happiness in every sip!</p>
+      <a href="menu.html" class="shop-btn">Shop Now</a>
+    </div>
+  </section>
 
-  <section class="home">
-    <div class="content">
-      <h1>Freshly Brewed Happiness</h1>
-      <p>Experience rich, aromatic coffee crafted with love.</p>
-      <a href="menu.html" class="btn">Order Now</a>
+  <!-- ===== About Section ===== -->
+  <section class="about">
+    <div class="about-content">
+      <h2>Freshly Brewed, Always</h2>
+      <p>
+        At Coffee Haven, we craft every cup with passion and precision.
+        Whether it’s a strong espresso or a creamy cappuccino, our goal is to bring
+        warmth, comfort, and flavor to your day.
+      </p>
     </div>
   </section>
 
   <footer>
-    <p>© 2025 Coffee Haven. All rights reserved.</p>
+    <p>© 2025 Coffee Haven | Freshly brewed happiness ☕</p>
   </footer>
 
   <script src="js/script.js"></script>
