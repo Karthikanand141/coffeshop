@@ -190,5 +190,31 @@ footer {
   text-align: center;
   display: inline-block;
 }
+.quantity-control {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.quantity-control button {
+  background-color: #5a3825;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.quantity-control span {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+#cart-count {
+  font-weight: bold;
+  color: #fff;
+}
 
 
