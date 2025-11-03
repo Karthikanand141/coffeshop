@@ -4,7 +4,61 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Coffee Haven | Home</title>
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    /* ===== Navbar Sign-In Button ===== */
+    #signin-link {
+      background-color: #6f4e37;
+      color: white;
+      padding: 6px 12px;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: 0.3s;
+      cursor: pointer;
+    }
+    #signin-link:hover { background-color: #8b5e3b; }
+
+    /* ===== Modal Overlay ===== */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 999;
+      left: 0; top: 0;
+      width: 100%; height: 100%;
+      background-color: rgba(0,0,0,0.5);
+      justify-content: center; align-items: center;
+    }
+
+    /* ===== Modal Box ===== */
+    .modal-content {
+      background: #fff;
+      padding: 25px 30px;
+      border-radius: 10px;
+      width: 320px;
+      text-align: center;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+      animation: fadeIn 0.3s ease;
+    }
+
+    .modal-content h2 { margin-bottom: 15px; color: #6f4e37; }
+    .modal-content input {
+      width: 100%; padding: 10px;
+      margin: 8px 0; border: 1px solid #ccc; border-radius: 5px;
+    }
+    .modal-content button {
+      background: #6f4e37; color: #fff;
+      border: none; padding: 10px 16px;
+      margin-top: 10px; border-radius: 6px;
+      cursor: pointer; width: 100%;
+    }
+    .modal-content button:hover { background: #8b5e3b; }
+    .close-btn { float: right; font-size: 20px; cursor: pointer; color: #555; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+  </style>
 </head>
 <body>
 
@@ -14,8 +68,8 @@
     <nav class="navbar">
       <a href="index.html" class="active">Home</a>
       <a href="menu.html">Menu</a>
-      <a href="cart.html">Cart (<span id="cart-count">0</span>)</a>
-      <a href="login.html" id="login-link">Sign In</a> <!-- ✅ Added Sign In link -->
+      <a href="cart.html">Cart <span id="cart-count">0</span></a>
+      <a id="signin-link">Sign In</a>
     </nav>
   </header>
 
@@ -38,12 +92,58 @@
     </p>
   </section>
 
+  <!-- ===== Sign In Modal ===== -->
+  <div id="signin-modal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn">&times;</span>
+      <h2>Sign In</h2>
+      <input type="email" id="email" placeholder="Enter email" required />
+      <input type="password" id="password" placeholder="Enter password" required />
+      <button id="login-btn">Sign In</button>
+    </div>
+  </div>
+
   <!-- ===== Footer ===== -->
   <footer>
     <p>© 2025 Coffee Haven | Freshly brewed happiness ☕</p>
   </footer>
 
-  <!-- ===== JS Script ===== -->
   <script src="js/script.js"></script>
+  <script>
+    const modal = document.getElementById("signin-modal");
+    const signinLink = document.getElementById("signin-link");
+    const closeBtn = document.querySelector(".close-btn");
+    const loginBtn = document.getElementById("login-btn");
+
+    const user = localStorage.getItem("user");
+
+    if (user) {
+      signinLink.textContent = "Hello, " + user.split("@")[0];
+      signinLink.style.background = "#4caf50";
+      signinLink.addEventListener("click", () => {
+        if (confirm("Sign out?")) {
+          localStorage.removeItem("user");
+          location.reload();
+        }
+      });
+    } else {
+      signinLink.addEventListener("click", () => modal.style.display = "flex");
+    }
+
+    closeBtn.addEventListener("click", () => modal.style.display = "none");
+    window.addEventListener("click", (e) => {
+      if (e.target === modal) modal.style.display = "none";
+    });
+
+    loginBtn.addEventListener("click", () => {
+      const email = document.getElementById("email").value.trim();
+      const pass = document.getElementById("password").value.trim();
+      if (!email || !pass) { alert("Please enter both email and password."); return; }
+      localStorage.setItem("user", email);
+      modal.style.display = "none";
+      alert("Signed in successfully!");
+      location.reload();
+    });
+  </script>
 </body>
 </html>
