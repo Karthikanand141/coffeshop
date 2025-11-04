@@ -23,12 +23,14 @@
       padding: 15px 40px;
       flex-wrap: wrap;
     }
+
     .logo {
       font-size: 1.5rem;
       text-decoration: none;
       color: #fff;
       font-weight: 600;
     }
+
     .navbar a {
       color: #fff;
       margin-left: 20px;
@@ -36,6 +38,7 @@
       font-size: 1rem;
       transition: 0.3s;
     }
+
     .navbar a:hover {
       color: #ffdfba;
     }
@@ -50,6 +53,7 @@
       cursor: pointer;
       font-weight: 500;
     }
+
     #signin-btn:hover {
       background-color: #ffdfba;
     }
@@ -298,6 +302,7 @@
 
   <!-- ===== JS ===== -->
   <script>
+    /* ===================== CART LOGIC ===================== */
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
     const cartContainer = document.getElementById("cart-items");
@@ -365,47 +370,62 @@
 
     renderCart();
 
-    // ===== Sign-In Modal =====
+    /* ===================== SIGN-IN SYSTEM ===================== */
     const modal = document.getElementById("signin-modal");
     const signinBtn = document.getElementById("signin-btn");
     const closeBtn = document.querySelector(".close-btn");
     const loginBtn = document.getElementById("login-btn");
-    const user = localStorage.getItem("user");
 
-    if (user) {
-      signinBtn.textContent = "Hello, " + user.split("@")[0];
-      signinBtn.style.background = "#4caf50";
-      signinBtn.addEventListener("click", () => {
-        if (confirm("Sign out?")) {
-          localStorage.removeItem("user");
-          location.reload();
-        }
-      });
-    } else {
-      signinBtn.addEventListener("click", () => modal.style.display = "flex");
+    function updateNavbarUser() {
+      const user = localStorage.getItem("user");
+      if (user) {
+        signinBtn.textContent = "Hello, " + user.split("@")[0];
+        signinBtn.style.background = "#4caf50";
+        signinBtn.onclick = () => {
+          if (confirm("Sign out?")) {
+            localStorage.removeItem("user");
+            updateNavbarUser();
+            syncUserAcrossPages();
+          }
+        };
+      } else {
+        signinBtn.textContent = "Sign In";
+        signinBtn.style.background = "#fff";
+        signinBtn.onclick = () => modal.style.display = "flex";
+      }
     }
 
-    closeBtn.addEventListener("click", () => modal.style.display = "none");
-    window.addEventListener("click", (e) => {
-      if (e.target === modal) modal.style.display = "none";
-    });
+    function syncUserAcrossPages() {
+      document.querySelectorAll("#signin-btn").forEach(btn => {
+        const user = localStorage.getItem("user");
+        if (user) {
+          btn.textContent = "Hello, " + user.split("@")[0];
+          btn.style.background = "#4caf50";
+        } else {
+          btn.textContent = "Sign In";
+          btn.style.background = "#fff";
+        }
+      });
+    }
 
-    loginBtn.addEventListener("click", () => {
+    updateNavbarUser();
+    syncUserAcrossPages();
+
+    closeBtn.onclick = () => modal.style.display = "none";
+    window.onclick = (e) => { if (e.target === modal) modal.style.display = "none"; };
+
+    loginBtn.onclick = () => {
       const email = document.getElementById("email").value.trim();
       const pass = document.getElementById("password").value.trim();
-      if (!email || !pass) {
-        alert("Please enter both email and password.");
-        return;
-      }
+      if (!email || !pass) return alert("Please enter both email and password.");
       localStorage.setItem("user", email);
       modal.style.display = "none";
-      signinBtn.textContent = "Hello, " + email.split("@")[0];
-      signinBtn.style.background = "#4caf50";
       alert("Signed in successfully!");
-      location.reload();
-    });
+      updateNavbarUser();
+      syncUserAcrossPages();
+    };
 
-    // ===== Checkout Logic =====
+    /* ===================== CHECKOUT ===================== */
     document.getElementById("checkout-btn").addEventListener("click", () => {
       if (!localStorage.getItem("user")) {
         alert("Please sign in before proceeding to checkout.");
