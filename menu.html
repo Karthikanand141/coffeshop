@@ -5,9 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Coffee Haven | Menu</title>
   <link rel="stylesheet" href="css/style.css" />
+
   <style>
     /* ===== Navbar Sign-In Button ===== */
-    #signin-link {
+    #signin-btn {
       background-color: #6f4e37;
       color: white;
       padding: 6px 12px;
@@ -16,7 +17,7 @@
       transition: 0.3s;
       cursor: pointer;
     }
-    #signin-link:hover {
+    #signin-btn:hover {
       background-color: #8b5e3b;
     }
 
@@ -86,8 +87,8 @@
     }
   </style>
 </head>
-<body>
 
+<body>
   <!-- ===== Header / Navbar ===== -->
   <header>
     <a href="index.html" class="logo">☕ Coffee Haven</a>
@@ -95,7 +96,7 @@
       <a href="index.html">Home</a>
       <a href="menu.html" class="active">Menu</a>
       <a href="cart.html">Cart <span id="cart-count">0</span></a>
-      <a id="signin-link">Sign In</a>
+      <a href="#" id="signin-btn">Sign In</a>
     </nav>
   </header>
 
@@ -192,7 +193,7 @@
   <script>
     // ====== Sign-In Modal Logic ======
     const modal = document.getElementById("signin-modal");
-    const signinLink = document.getElementById("signin-link");
+    const signinBtn = document.getElementById("signin-btn");
     const closeBtn = document.querySelector(".close-btn");
     const loginBtn = document.getElementById("login-btn");
 
@@ -200,9 +201,9 @@
 
     // If user already logged in, show greeting instead of sign-in
     if (user) {
-      signinLink.textContent = "Hello, " + user.split("@")[0];
-      signinLink.style.background = "#4caf50";
-      signinLink.addEventListener("click", () => {
+      signinBtn.textContent = "Hello, " + user.split("@")[0];
+      signinBtn.style.background = "#4caf50";
+      signinBtn.addEventListener("click", () => {
         if (confirm("Sign out?")) {
           localStorage.removeItem("user");
           location.reload();
@@ -210,7 +211,7 @@
       });
     } else {
       // Open modal
-      signinLink.addEventListener("click", () => modal.style.display = "flex");
+      signinBtn.addEventListener("click", () => modal.style.display = "flex");
     }
 
     // Close modal
@@ -229,8 +230,8 @@
       }
       localStorage.setItem("user", email);
       modal.style.display = "none";
-      signinLink.textContent = "Hello, " + email.split("@")[0];
-      signinLink.style.background = "#4caf50";
+      signinBtn.textContent = "Hello, " + email.split("@")[0];
+      signinBtn.style.background = "#4caf50";
       alert("Signed in successfully!");
       location.reload();
     });
