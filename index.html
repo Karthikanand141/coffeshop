@@ -16,6 +16,7 @@
       transition: 0.3s;
       cursor: pointer;
       position: relative;
+      display: inline-block;
     }
     #signin-btn:hover { background-color: #8b5e3b; }
 
@@ -23,14 +24,14 @@
     .dropdown {
       display: none;
       position: absolute;
-      top: 30px;
+      top: 35px;
       right: 0;
       background: white;
       border: 1px solid #ccc;
       border-radius: 8px;
       box-shadow: 0 2px 6px rgba(0,0,0,0.15);
       z-index: 1000;
-      min-width: 120px;
+      min-width: 140px;
       text-align: left;
     }
 
@@ -122,11 +123,10 @@
       <a href="index.html" class="active">Home</a>
       <a href="menu.html">Menu</a>
       <a href="cart.html">Cart <span id="cart-count">0</span></a>
-      <div style="position: relative;">
+      <div style="position: relative; display:inline-block;">
         <a href="#" id="signin-btn">Sign In</a>
         <div class="dropdown" id="dropdown-menu">
           <button id="signout-btn">Sign Out</button>
-          <button id="cancel-btn">Cancel</button>
         </div>
       </div>
     </nav>
@@ -186,98 +186,98 @@
   </footer>
 
   <script>
-    const modal = document.getElementById("signin-modal");
-    const signinBtn = document.getElementById("signin-btn");
-    const dropdown = document.getElementById("dropdown-menu");
-    const signoutBtn = document.getElementById("signout-btn");
-    const cancelBtn = document.getElementById("cancel-btn");
-    const closeBtn = document.querySelector(".close-btn");
+    // ===== Shared login state for all pages =====
+    document.addEventListener("DOMContentLoaded", () => {
+      const modal = document.getElementById("signin-modal");
+      const signinBtn = document.getElementById("signin-btn");
+      const dropdown = document.getElementById("dropdown-menu");
+      const signoutBtn = document.getElementById("signout-btn");
+      const closeBtn = document.querySelector(".close-btn");
 
-    const tabSignin = document.getElementById("tab-signin");
-    const tabSignup = document.getElementById("tab-signup");
-    const signinTab = document.getElementById("signin-tab");
-    const signupTab = document.getElementById("signup-tab");
-    const loginBtn = document.getElementById("login-btn");
-    const registerBtn = document.getElementById("register-btn");
+      const tabSignin = document.getElementById("tab-signin");
+      const tabSignup = document.getElementById("tab-signup");
+      const signinTab = document.getElementById("signin-tab");
+      const signupTab = document.getElementById("signup-tab");
+      const loginBtn = document.getElementById("login-btn");
+      const registerBtn = document.getElementById("register-btn");
 
-    // ===== TAB SWITCH =====
-    tabSignin.addEventListener("click", () => {
-      tabSignin.classList.add("active");
-      tabSignup.classList.remove("active");
-      signinTab.classList.add("active");
-      signupTab.classList.remove("active");
-    });
-    tabSignup.addEventListener("click", () => {
-      tabSignup.classList.add("active");
-      tabSignin.classList.remove("active");
-      signupTab.classList.add("active");
-      signinTab.classList.remove("active");
-    });
+      // Switch tabs
+      tabSignin.addEventListener("click", () => {
+        tabSignin.classList.add("active");
+        tabSignup.classList.remove("active");
+        signinTab.classList.add("active");
+        signupTab.classList.remove("active");
+      });
+      tabSignup.addEventListener("click", () => {
+        tabSignup.classList.add("active");
+        tabSignin.classList.remove("active");
+        signupTab.classList.add("active");
+        signinTab.classList.remove("active");
+      });
 
-    // ===== OPEN / CLOSE MODAL =====
-    signinBtn.addEventListener("click", () => {
-      if (!localStorage.getItem("loggedUser")) {
-        modal.style.display = "flex";
-      } else {
-        dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+      // Modal open/close
+      signinBtn.addEventListener("click", () => {
+        const loggedUser = localStorage.getItem("loggedUser");
+        if (!loggedUser) modal.style.display = "flex";
+        else dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+      });
+
+      closeBtn.addEventListener("click", () => modal.style.display = "none");
+      window.addEventListener("click", (e) => {
+        if (e.target === modal) modal.style.display = "none";
+        if (!signinBtn.contains(e.target)) dropdown.style.display = "none";
+      });
+
+      // Load users
+      const users = JSON.parse(localStorage.getItem("users") || "[]");
+      let loggedUser = localStorage.getItem("loggedUser");
+
+      // Update navbar
+      if (loggedUser) {
+        const name = loggedUser.split("@")[0];
+        signinBtn.textContent = "Hello, " + name;
+        signinBtn.style.background = "#4caf50";
       }
-    });
 
-    closeBtn.addEventListener("click", () => modal.style.display = "none");
-    window.addEventListener("click", (e) => {
-      if (e.target === modal) modal.style.display = "none";
-      if (!signinBtn.contains(e.target)) dropdown.style.display = "none";
-    });
+      // Register
+      registerBtn.addEventListener("click", () => {
+        const name = document.getElementById("signup-name").value.trim();
+        const email = document.getElementById("signup-email").value.trim();
+        const pass = document.getElementById("signup-password").value.trim();
 
-    // ===== USER DATA (LocalStorage) =====
-    const users = JSON.parse(localStorage.getItem("users") || "[]");
-    let loggedUser = localStorage.getItem("loggedUser");
+        if (!name || !email || !pass) return alert("Please fill all fields.");
+        if (users.find(u => u.email === email)) return alert("Email already registered.");
 
-    if (loggedUser) {
-      const name = loggedUser.split("@")[0];
-      signinBtn.textContent = "Hello, " + name;
-      signinBtn.style.background = "#4caf50";
-    }
+        users.push({ name, email, pass });
+        localStorage.setItem("users", JSON.stringify(users));
+        alert("Account created successfully!");
+        tabSignin.click();
+      });
 
-    // ===== SIGN UP =====
-    registerBtn.addEventListener("click", () => {
-      const name = document.getElementById("signup-name").value.trim();
-      const email = document.getElementById("signup-email").value.trim();
-      const pass = document.getElementById("signup-password").value.trim();
+      // Login
+      loginBtn.addEventListener("click", () => {
+        const email = document.getElementById("signin-email").value.trim();
+        const pass = document.getElementById("signin-password").value.trim();
+        const user = users.find(u => u.email === email && u.pass === pass);
+        if (!user) return alert("Invalid credentials.");
+        localStorage.setItem("loggedUser", user.email);
+        modal.style.display = "none";
+        alert("Welcome back, " + user.name + "!");
+        location.reload();
+      });
 
-      if (!name || !email || !pass) return alert("Please fill all fields.");
-      if (users.find(u => u.email === email)) return alert("Email already registered.");
-
-      users.push({ name, email, pass });
-      localStorage.setItem("users", JSON.stringify(users));
-      alert("Account created successfully!");
-      tabSignin.click();
-    });
-
-    // ===== SIGN IN =====
-    loginBtn.addEventListener("click", () => {
-      const email = document.getElementById("signin-email").value.trim();
-      const pass = document.getElementById("signin-password").value.trim();
-      const user = users.find(u => u.email === email && u.pass === pass);
-
-      if (!user) return alert("Invalid credentials.");
-      localStorage.setItem("loggedUser", user.email);
-      modal.style.display = "none";
-      alert("Welcome back, " + user.name + "!");
-      location.reload();
-    });
-
-    // ===== SIGN OUT =====
-    signoutBtn.addEventListener("click", () => {
-      localStorage.removeItem("loggedUser");
-      dropdown.style.display = "none";
-      signinBtn.textContent = "Sign In";
-      signinBtn.style.background = "#6f4e37";
-    });
-
-    // ===== CANCEL =====
-    cancelBtn.addEventListener("click", () => {
-      dropdown.style.display = "none";
+      // Logout
+      signoutBtn.addEventListener("click", () => {
+        localStorage.removeItem("loggedUser");
+        dropdown.style.display = "none";
+        signinBtn.textContent = "Sign In";
+        signinBtn.style.background = "#6f4e37";
+        // Update all pages
+        document.querySelectorAll("#signin-btn").forEach(btn => {
+          btn.textContent = "Sign In";
+          btn.style.background = "#6f4e37";
+        });
+      });
     });
   </script>
 </body>
