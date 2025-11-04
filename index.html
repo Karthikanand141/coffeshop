@@ -149,95 +149,90 @@
     <p>© 2025 Coffee Haven | Freshly brewed happiness ☕</p>
   </footer>
 
-  <script src="js/script.js"></script>
   <script>
     const modal = document.getElementById("signin-modal");
     const signinBtn = document.getElementById("signin-btn");
     const closeBtn = document.querySelector(".close-btn");
-
     const tabSignin = document.getElementById("tab-signin");
     const tabSignup = document.getElementById("tab-signup");
     const signinTab = document.getElementById("signin-tab");
     const signupTab = document.getElementById("signup-tab");
-
     const loginBtn = document.getElementById("login-btn");
     const registerBtn = document.getElementById("register-btn");
 
-    // ===== TAB SWITCH =====
-    tabSignin.addEventListener("click", () => {
+    // === Tab Switch ===
+    tabSignin.onclick = () => {
       tabSignin.classList.add("active");
       tabSignup.classList.remove("active");
       signinTab.classList.add("active");
       signupTab.classList.remove("active");
-    });
-
-    tabSignup.addEventListener("click", () => {
+    };
+    tabSignup.onclick = () => {
       tabSignup.classList.add("active");
       tabSignin.classList.remove("active");
       signupTab.classList.add("active");
       signinTab.classList.remove("active");
-    });
+    };
 
-    // ===== OPEN / CLOSE MODAL =====
-    signinBtn.addEventListener("click", () => {
-      modal.style.display = "flex";
-    });
+    // === Modal Control ===
+    closeBtn.onclick = () => modal.style.display = "none";
+    window.onclick = e => { if (e.target === modal) modal.style.display = "none"; };
 
-    closeBtn.addEventListener("click", () => modal.style.display = "none");
-
-    window.addEventListener("click", (e) => {
-      if (e.target === modal) modal.style.display = "none";
-    });
-
-    // ===== USER DATA (LocalStorage) =====
+    // === Load Users and Logged User ===
     const users = JSON.parse(localStorage.getItem("users") || "[]");
     let loggedUser = localStorage.getItem("loggedUser");
 
-    if (loggedUser) {
-      const name = loggedUser.split("@")[0];
-      signinBtn.textContent = "Hello, " + name;
-      signinBtn.style.background = "#4caf50";
-      signinBtn.addEventListener("click", () => {
-        if (confirm("Do you want to sign out?")) {
-          localStorage.removeItem("loggedUser");
-          location.reload();
-        }
-      });
+    function updateUserUI() {
+      if (loggedUser) {
+        const userObj = users.find(u => u.email === loggedUser);
+        const name = userObj ? userObj.name.split(" ")[0] : loggedUser.split("@")[0];
+        signinBtn.textContent = "Hello, " + name;
+        signinBtn.style.background = "#4caf50";
+        signinBtn.onclick = () => {
+          const confirmLogout = confirm("Do you want to sign out?");
+          if (confirmLogout) {
+            localStorage.removeItem("loggedUser");
+            loggedUser = null;
+            updateUserUI();
+          }
+        };
+      } else {
+        signinBtn.textContent = "Sign In";
+        signinBtn.style.background = "#6f4e37";
+        signinBtn.onclick = () => modal.style.display = "flex";
+      }
     }
 
-    // ===== SIGN UP =====
-    registerBtn.addEventListener("click", () => {
+    updateUserUI();
+
+    // === Register User ===
+    registerBtn.onclick = () => {
       const name = document.getElementById("signup-name").value.trim();
       const email = document.getElementById("signup-email").value.trim();
       const pass = document.getElementById("signup-password").value.trim();
-
       if (!name || !email || !pass) return alert("Please fill all fields.");
 
-      if (users.find(u => u.email === email)) {
-        alert("Email already registered. Please sign in.");
-        return;
-      }
+      if (users.find(u => u.email === email)) return alert("Email already exists.");
 
       users.push({ name, email, pass });
       localStorage.setItem("users", JSON.stringify(users));
-      alert("Account created successfully!");
-      tabSignin.click(); // Switch to sign-in tab
-    });
+      alert("Account created successfully! Please sign in.");
+      tabSignin.click();
+    };
 
-    // ===== SIGN IN =====
-    loginBtn.addEventListener("click", () => {
+    // === Login User ===
+    loginBtn.onclick = () => {
       const email = document.getElementById("signin-email").value.trim();
       const pass = document.getElementById("signin-password").value.trim();
-
       const user = users.find(u => u.email === email && u.pass === pass);
 
-      if (!user) return alert("Invalid credentials. Please try again.");
-
+      if (!user) return alert("Invalid credentials. Try again.");
       localStorage.setItem("loggedUser", user.email);
+      loggedUser = user.email;
       modal.style.display = "none";
       alert("Welcome back, " + user.name + "!");
-      location.reload();
-    });
+      updateUserUI();
+    };
   </script>
 </body>
 </html>
