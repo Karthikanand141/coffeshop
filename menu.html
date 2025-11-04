@@ -337,6 +337,11 @@
       }
     }
 
+    // Sync sign-in status across pages
+    window.addEventListener("storage", (e) => {
+      if (e.key === "user" || e.key === "signedOut") updateNavbarUser();
+    });
+
     closeBtn.onclick = () => modal.style.display = "none";
     window.onclick = (e) => { if (e.target === modal) modal.style.display = "none"; };
 
