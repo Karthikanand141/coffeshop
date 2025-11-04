@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Coffee Haven | Menu</title>
   <link rel="stylesheet" href="css/style.css" />
-
   <style>
     /* ===== Navbar Sign-In Button ===== */
     #signin-btn {
@@ -16,70 +15,93 @@
       text-decoration: none;
       transition: 0.3s;
       cursor: pointer;
+      position: relative;
     }
-    #signin-btn:hover {
-      background-color: #8b5e3b;
+    #signin-btn:hover { background-color: #8b5e3b; }
+
+    /* ===== Dropdown ===== */
+    .dropdown {
+      display: none;
+      position: absolute;
+      top: 30px;
+      right: 0;
+      background: white;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+      z-index: 1000;
+      min-width: 120px;
+      text-align: left;
     }
 
-    /* ===== Modal Overlay ===== */
+    .dropdown button {
+      background: none;
+      border: none;
+      width: 100%;
+      padding: 8px 12px;
+      text-align: left;
+      cursor: pointer;
+      color: #6f4e37;
+    }
+
+    .dropdown button:hover { background-color: #f3e9e3; }
+
+    /* ===== Modal ===== */
     .modal {
       display: none;
       position: fixed;
       z-index: 999;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
+      left: 0; top: 0;
+      width: 100%; height: 100%;
       background-color: rgba(0,0,0,0.5);
-      justify-content: center;
-      align-items: center;
+      justify-content: center; align-items: center;
     }
 
-    /* ===== Modal Box ===== */
     .modal-content {
       background: #fff;
       padding: 25px 30px;
       border-radius: 10px;
-      width: 320px;
+      width: 340px;
       text-align: center;
       box-shadow: 0 5px 15px rgba(0,0,0,0.3);
       animation: fadeIn 0.3s ease;
     }
 
-    .modal-content h2 {
+    .modal-content h2 { margin-bottom: 15px; color: #6f4e37; }
+    .modal-content input {
+      width: 100%; padding: 10px;
+      margin: 8px 0; border: 1px solid #ccc; border-radius: 5px;
+    }
+    .modal-content button {
+      background: #6f4e37; color: #fff;
+      border: none; padding: 10px 16px;
+      margin-top: 10px; border-radius: 6px;
+      cursor: pointer; width: 100%;
+    }
+    .modal-content button:hover { background: #8b5e3b; }
+    .close-btn { float: right; font-size: 20px; cursor: pointer; color: #555; }
+
+    /* ===== Tabs ===== */
+    .tab-buttons {
+      display: flex;
+      justify-content: center;
       margin-bottom: 15px;
+      border-bottom: 1px solid #ddd;
+    }
+    .tab-buttons button {
+      background: none;
+      border: none;
+      padding: 10px 20px;
+      font-weight: bold;
+      cursor: pointer;
       color: #6f4e37;
     }
-
-    .modal-content input {
-      width: 100%;
-      padding: 10px;
-      margin: 8px 0;
-      border: 1px solid #ccc;
-      border-radius: 5px;
+    .tab-buttons button.active {
+      border-bottom: 2px solid #6f4e37;
+      color: #4b3621;
     }
-
-    .modal-content button {
-      background: #6f4e37;
-      color: #fff;
-      border: none;
-      padding: 10px 16px;
-      margin-top: 10px;
-      border-radius: 6px;
-      cursor: pointer;
-      width: 100%;
-    }
-
-    .modal-content button:hover {
-      background: #8b5e3b;
-    }
-
-    .close-btn {
-      float: right;
-      font-size: 20px;
-      cursor: pointer;
-      color: #555;
-    }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
 
     @keyframes fadeIn {
       from { opacity: 0; transform: scale(0.9); }
@@ -89,152 +111,205 @@
 </head>
 
 <body>
-  <!-- ===== Header / Navbar ===== -->
+  <!-- ===== Header ===== -->
   <header>
     <a href="index.html" class="logo">☕ Coffee Haven</a>
     <nav class="navbar">
       <a href="index.html">Home</a>
       <a href="menu.html" class="active">Menu</a>
       <a href="cart.html">Cart <span id="cart-count">0</span></a>
-      <a href="#" id="signin-btn">Sign In</a>
+      <div style="position: relative;">
+        <a href="#" id="signin-btn">Sign In</a>
+        <div class="dropdown" id="dropdown-menu">
+          <button id="signout-btn">Sign Out</button>
+          <button id="cancel-btn">Cancel</button>
+        </div>
+      </div>
     </nav>
   </header>
 
-  <!-- ===== Menu Section ===== -->
+  <!-- ===== Menu ===== -->
   <section class="menu">
     <h2>Our Coffee Menu</h2>
     <div class="menu-container">
-
       <div class="menu-item">
         <img src="images/coffee1.png" alt="Espresso" />
         <h3>Espresso</h3>
         <p class="price">$3.00</p>
-        <div class="quantity-control">
-          <label>Qty:</label>
-          <select>
-            <option>1</option><option>2</option><option>3</option><option>4</option>
-          </select>
-        </div>
-        <div class="action-buttons">
-          <button class="add-cart" data-name="Espresso" data-price="3" data-img="images/coffee1.png">Add to Cart</button>
-          <button class="buy-now" data-name="Espresso" data-price="3" data-img="images/coffee1.png">Buy Now</button>
-        </div>
+        <button class="add-cart" data-name="Espresso" data-price="3" data-img="images/coffee1.png">Add to Cart</button>
       </div>
 
       <div class="menu-item">
         <img src="images/coffee2.png" alt="Cappuccino" />
         <h3>Cappuccino</h3>
         <p class="price">$4.50</p>
-        <div class="quantity-control">
-          <label>Qty:</label>
-          <select>
-            <option>1</option><option>2</option><option>3</option><option>4</option>
-          </select>
-        </div>
-        <div class="action-buttons">
-          <button class="add-cart" data-name="Cappuccino" data-price="4.5" data-img="images/coffee2.png">Add to Cart</button>
-          <button class="buy-now" data-name="Cappuccino" data-price="4.5" data-img="images/coffee2.png">Buy Now</button>
-        </div>
+        <button class="add-cart" data-name="Cappuccino" data-price="4.5" data-img="images/coffee2.png">Add to Cart</button>
       </div>
 
       <div class="menu-item">
         <img src="images/coffee3.png" alt="Latte" />
         <h3>Latte</h3>
         <p class="price">$4.00</p>
-        <div class="quantity-control">
-          <label>Qty:</label>
-          <select>
-            <option>1</option><option>2</option><option>3</option><option>4</option>
-          </select>
-        </div>
-        <div class="action-buttons">
-          <button class="add-cart" data-name="Latte" data-price="4" data-img="images/coffee3.png">Add to Cart</button>
-          <button class="buy-now" data-name="Latte" data-price="4" data-img="images/coffee3.png">Buy Now</button>
-        </div>
+        <button class="add-cart" data-name="Latte" data-price="4" data-img="images/coffee3.png">Add to Cart</button>
       </div>
 
       <div class="menu-item">
         <img src="images/coffee4.png" alt="Mocha" />
         <h3>Mocha</h3>
         <p class="price">$4.80</p>
-        <div class="quantity-control">
-          <label>Qty:</label>
-          <select>
-            <option>1</option><option>2</option><option>3</option><option>4</option>
-          </select>
-        </div>
-        <div class="action-buttons">
-          <button class="add-cart" data-name="Mocha" data-price="4.8" data-img="images/coffee4.png">Add to Cart</button>
-          <button class="buy-now" data-name="Mocha" data-price="4.8" data-img="images/coffee4.png">Buy Now</button>
-        </div>
+        <button class="add-cart" data-name="Mocha" data-price="4.8" data-img="images/coffee4.png">Add to Cart</button>
       </div>
-
     </div>
   </section>
 
-  <!-- ===== Sign In Modal ===== -->
+  <!-- ===== Sign In / Sign Up Modal ===== -->
   <div id="signin-modal" class="modal">
     <div class="modal-content">
       <span class="close-btn">&times;</span>
-      <h2>Sign In</h2>
-      <input type="email" id="email" placeholder="Enter email" required />
-      <input type="password" id="password" placeholder="Enter password" required />
-      <button id="login-btn">Sign In</button>
+
+      <div class="tab-buttons">
+        <button id="tab-signin" class="active">Sign In</button>
+        <button id="tab-signup">Sign Up</button>
+      </div>
+
+      <!-- Sign In -->
+      <div id="signin-tab" class="tab-content active">
+        <h2>Sign In</h2>
+        <input type="email" id="signin-email" placeholder="Email" required />
+        <input type="password" id="signin-password" placeholder="Password" required />
+        <button id="login-btn">Sign In</button>
+      </div>
+
+      <!-- Sign Up -->
+      <div id="signup-tab" class="tab-content">
+        <h2>Create Account</h2>
+        <input type="text" id="signup-name" placeholder="Full Name" required />
+        <input type="email" id="signup-email" placeholder="Email" required />
+        <input type="password" id="signup-password" placeholder="Password" required />
+        <button id="register-btn">Register</button>
+      </div>
     </div>
   </div>
 
-  <!-- ===== Footer ===== -->
   <footer>
     <p>© 2025 Coffee Haven | Freshly brewed happiness ☕</p>
   </footer>
 
-  <!-- ===== JS Scripts ===== -->
-  <script src="js/script.js"></script>
   <script>
-    // ====== Sign-In Modal Logic ======
     const modal = document.getElementById("signin-modal");
     const signinBtn = document.getElementById("signin-btn");
+    const dropdown = document.getElementById("dropdown-menu");
+    const signoutBtn = document.getElementById("signout-btn");
+    const cancelBtn = document.getElementById("cancel-btn");
     const closeBtn = document.querySelector(".close-btn");
+
+    const tabSignin = document.getElementById("tab-signin");
+    const tabSignup = document.getElementById("tab-signup");
+    const signinTab = document.getElementById("signin-tab");
+    const signupTab = document.getElementById("signup-tab");
     const loginBtn = document.getElementById("login-btn");
+    const registerBtn = document.getElementById("register-btn");
 
-    const user = localStorage.getItem("user");
+    // ===== TAB SWITCH =====
+    tabSignin.addEventListener("click", () => {
+      tabSignin.classList.add("active");
+      tabSignup.classList.remove("active");
+      signinTab.classList.add("active");
+      signupTab.classList.remove("active");
+    });
+    tabSignup.addEventListener("click", () => {
+      tabSignup.classList.add("active");
+      tabSignin.classList.remove("active");
+      signupTab.classList.add("active");
+      signinTab.classList.remove("active");
+    });
 
-    // If user already logged in, show greeting instead of sign-in
-    if (user) {
-      signinBtn.textContent = "Hello, " + user.split("@")[0];
-      signinBtn.style.background = "#4caf50";
-      signinBtn.addEventListener("click", () => {
-        if (confirm("Sign out?")) {
-          localStorage.removeItem("user");
-          location.reload();
-        }
-      });
-    } else {
-      // Open modal
-      signinBtn.addEventListener("click", () => modal.style.display = "flex");
-    }
+    // ===== OPEN / CLOSE MODAL =====
+    signinBtn.addEventListener("click", () => {
+      if (!localStorage.getItem("loggedUser")) {
+        modal.style.display = "flex";
+      } else {
+        dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+      }
+    });
 
-    // Close modal
     closeBtn.addEventListener("click", () => modal.style.display = "none");
     window.addEventListener("click", (e) => {
       if (e.target === modal) modal.style.display = "none";
+      if (!signinBtn.contains(e.target)) dropdown.style.display = "none";
     });
 
-    // Handle login
-    loginBtn.addEventListener("click", () => {
-      const email = document.getElementById("email").value.trim();
-      const pass = document.getElementById("password").value.trim();
-      if (!email || !pass) {
-        alert("Please enter both email and password.");
-        return;
-      }
-      localStorage.setItem("user", email);
-      modal.style.display = "none";
-      signinBtn.textContent = "Hello, " + email.split("@")[0];
+    // ===== USER DATA =====
+    const users = JSON.parse(localStorage.getItem("users") || "[]");
+    let loggedUser = localStorage.getItem("loggedUser");
+
+    if (loggedUser) {
+      const name = loggedUser.split("@")[0];
+      signinBtn.textContent = "Hello, " + name;
       signinBtn.style.background = "#4caf50";
-      alert("Signed in successfully!");
+    }
+
+    // ===== SIGN UP =====
+    registerBtn.addEventListener("click", () => {
+      const name = document.getElementById("signup-name").value.trim();
+      const email = document.getElementById("signup-email").value.trim();
+      const pass = document.getElementById("signup-password").value.trim();
+
+      if (!name || !email || !pass) return alert("Please fill all fields.");
+      if (users.find(u => u.email === email)) return alert("Email already registered.");
+
+      users.push({ name, email, pass });
+      localStorage.setItem("users", JSON.stringify(users));
+      alert("Account created successfully!");
+      tabSignin.click();
+    });
+
+    // ===== SIGN IN =====
+    loginBtn.addEventListener("click", () => {
+      const email = document.getElementById("signin-email").value.trim();
+      const pass = document.getElementById("signin-password").value.trim();
+      const user = users.find(u => u.email === email && u.pass === pass);
+
+      if (!user) return alert("Invalid credentials.");
+      localStorage.setItem("loggedUser", user.email);
+      modal.style.display = "none";
+      alert("Welcome back, " + user.name + "!");
       location.reload();
     });
+
+    // ===== SIGN OUT =====
+    signoutBtn.addEventListener("click", () => {
+      localStorage.removeItem("loggedUser");
+      dropdown.style.display = "none";
+      signinBtn.textContent = "Sign In";
+      signinBtn.style.background = "#6f4e37";
+    });
+
+    cancelBtn.addEventListener("click", () => dropdown.style.display = "none");
+
+    // ===== ADD TO CART =====
+    const cartBtns = document.querySelectorAll(".add-cart");
+    cartBtns.forEach(btn => {
+      btn.addEventListener("click", () => {
+        const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+        const item = {
+          name: btn.dataset.name,
+          price: parseFloat(btn.dataset.price),
+          img: btn.dataset.img,
+          qty: 1
+        };
+        const existing = cart.find(p => p.name === item.name);
+        if (existing) existing.qty++;
+        else cart.push(item);
+        localStorage.setItem("cart", JSON.stringify(cart));
+        document.getElementById("cart-count").textContent = cart.length;
+        alert(item.name + " added to cart!");
+      });
+    });
+
+    // ===== SHOW CART COUNT =====
+    const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+    document.getElementById("cart-count").textContent = cart.length;
   </script>
 </body>
 </html>
