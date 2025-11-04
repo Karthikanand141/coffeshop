@@ -186,7 +186,6 @@
   </footer>
 
   <script>
-    // ===== Shared login state for all pages =====
     document.addEventListener("DOMContentLoaded", () => {
       const modal = document.getElementById("signin-modal");
       const signinBtn = document.getElementById("signin-btn");
@@ -201,7 +200,7 @@
       const loginBtn = document.getElementById("login-btn");
       const registerBtn = document.getElementById("register-btn");
 
-      // Switch tabs
+      // ===== Tabs Switch =====
       tabSignin.addEventListener("click", () => {
         tabSignin.classList.add("active");
         tabSignup.classList.remove("active");
@@ -215,7 +214,7 @@
         signinTab.classList.remove("active");
       });
 
-      // Modal open/close
+      // ===== Modal open/close =====
       signinBtn.addEventListener("click", () => {
         const loggedUser = localStorage.getItem("loggedUser");
         if (!loggedUser) modal.style.display = "flex";
@@ -228,18 +227,23 @@
         if (!signinBtn.contains(e.target)) dropdown.style.display = "none";
       });
 
-      // Load users
+      // ===== User Handling =====
       const users = JSON.parse(localStorage.getItem("users") || "[]");
-      let loggedUser = localStorage.getItem("loggedUser");
 
-      // Update navbar
-      if (loggedUser) {
-        const name = loggedUser.split("@")[0];
-        signinBtn.textContent = "Hello, " + name;
-        signinBtn.style.background = "#4caf50";
-      }
+      const updateNavbar = () => {
+        const loggedUser = localStorage.getItem("loggedUser");
+        if (loggedUser) {
+          const userObj = users.find(u => u.email === loggedUser);
+          const name = userObj ? userObj.name.split(" ")[0] : "User";
+          signinBtn.textContent = "Hello, " + name;
+          signinBtn.style.background = "#4caf50";
+        } else {
+          signinBtn.textContent = "Sign In";
+          signinBtn.style.background = "#6f4e37";
+        }
+      };
 
-      // Register
+      // ===== Register =====
       registerBtn.addEventListener("click", () => {
         const name = document.getElementById("signup-name").value.trim();
         const email = document.getElementById("signup-email").value.trim();
@@ -254,30 +258,32 @@
         tabSignin.click();
       });
 
-      // Login
+      // ===== Login =====
       loginBtn.addEventListener("click", () => {
         const email = document.getElementById("signin-email").value.trim();
         const pass = document.getElementById("signin-password").value.trim();
         const user = users.find(u => u.email === email && u.pass === pass);
         if (!user) return alert("Invalid credentials.");
+
         localStorage.setItem("loggedUser", user.email);
         modal.style.display = "none";
         alert("Welcome back, " + user.name + "!");
-        location.reload();
+        updateNavbar();
       });
 
-      // Logout
+      // ===== Logout =====
       signoutBtn.addEventListener("click", () => {
         localStorage.removeItem("loggedUser");
         dropdown.style.display = "none";
-        signinBtn.textContent = "Sign In";
-        signinBtn.style.background = "#6f4e37";
-        // Update all pages
-        document.querySelectorAll("#signin-btn").forEach(btn => {
-          btn.textContent = "Sign In";
-          btn.style.background = "#6f4e37";
-        });
+        updateNavbar();
       });
+
+      updateNavbar();
+
+      // ===== Update Cart Count =====
+      const cartCount = document.getElementById("cart-count");
+      const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+      cartCount.textContent = cart.length;
     });
   </script>
 </body>
