@@ -300,7 +300,7 @@
   </div>
 
   <script>
-    /* ========== CART SYSTEM ========== */
+    /* ===== CART LOGIC ===== */
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
     const cartContainer = document.getElementById("cart-items");
     const totalEl = document.getElementById("cart-total");
@@ -315,9 +315,11 @@
         cartCount.textContent = "0";
         return;
       }
+
       cart.forEach((item, index) => {
         const subtotal = item.price * item.quantity;
         total += subtotal;
+
         const div = document.createElement("div");
         div.classList.add("cart-item");
         div.innerHTML = `
@@ -336,6 +338,7 @@
         `;
         cartContainer.appendChild(div);
       });
+
       totalEl.textContent = total.toFixed(2);
       cartCount.textContent = cart.reduce((acc, i) => acc + i.quantity, 0);
       localStorage.setItem("cart", JSON.stringify(cart));
@@ -357,7 +360,7 @@
 
     renderCart();
 
-    /* ========== SIGN-IN MODAL & STATE ========== */
+    /* ===== SIGN-IN MODAL ===== */
     const modal = document.getElementById("signin-modal");
     const signinBtn = document.getElementById("signin-btn");
     const closeBtn = document.querySelector(".close-btn");
@@ -373,6 +376,7 @@
           if (confirm("Sign out?")) {
             localStorage.removeItem("user");
             updateNavbarUser();
+            localStorage.setItem("signedOut", "true");
           }
         };
       } else {
@@ -393,23 +397,26 @@
       modal.style.display = "none";
       alert("Signed in successfully!");
       updateNavbarUser();
-      if (redirectAfterLogin === "checkout") document.getElementById("checkout-btn").click();
+      if (redirectAfterLogin === "checkout") proceedCheckout();
     };
 
-    updateNavbarUser();
-
-    /* ========== CHECKOUT ========== */
-    document.getElementById("checkout-btn").addEventListener("click", () => {
-      if (!localStorage.getItem("user")) {
-        redirectAfterLogin = "checkout";
-        alert("Please sign in before proceeding to checkout.");
-        modal.style.display = "flex";
-        return;
-      }
+    function proceedCheckout() {
       alert("Order placed successfully! Thank you for shopping ☕");
       localStorage.removeItem("cart");
       renderCart();
+    }
+
+    /* ===== CHECKOUT ===== */
+    document.getElementById("checkout-btn").addEventListener("click", () => {
+      if (!localStorage.getItem("user")) {
+        redirectAfterLogin = "checkout";
+        modal.style.display = "flex";
+        return;
+      }
+      proceedCheckout();
     });
+
+    updateNavbarUser();
   </script>
 </body>
 </html>
