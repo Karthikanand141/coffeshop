@@ -44,18 +44,47 @@
     }
 
     #signin-btn {
-      background-color: #fff;
-      color: #6f4e37;
+      background-color: #6f4e37;
+      color: white;
       padding: 6px 12px;
       border-radius: 6px;
       text-decoration: none;
       transition: 0.3s;
       cursor: pointer;
-      font-weight: 500;
+      position: relative;
+      display: inline-block;
     }
 
     #signin-btn:hover {
-      background-color: #ffdfba;
+      background-color: #8b5e3b;
+    }
+
+    .dropdown {
+      display: none;
+      position: absolute;
+      top: 35px;
+      right: 0;
+      background: white;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+      z-index: 1000;
+      min-width: 140px;
+      text-align: left;
+    }
+
+    .dropdown button {
+      background: none;
+      border: none;
+      width: 100%;
+      padding: 8px 12px;
+      text-align: left;
+      cursor: pointer;
+      color: #6f4e37;
+    }
+
+    .dropdown button:hover {
+      background-color: #f3e9e3;
     }
 
     /* ===== Cart Container ===== */
@@ -195,64 +224,40 @@
       color: #777;
     }
 
-    /* ===== Modal (Sign-in) ===== */
+    /* ===== Modal ===== */
     .modal {
       display: none;
       position: fixed;
       z-index: 999;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
+      left: 0; top: 0;
+      width: 100%; height: 100%;
       background-color: rgba(0,0,0,0.5);
-      justify-content: center;
-      align-items: center;
+      justify-content: center; align-items: center;
     }
 
     .modal-content {
       background: #fff;
       padding: 25px 30px;
       border-radius: 10px;
-      width: 320px;
+      width: 340px;
       text-align: center;
       box-shadow: 0 5px 15px rgba(0,0,0,0.3);
       animation: fadeIn 0.3s ease;
     }
 
-    .modal-content h2 {
-      margin-bottom: 15px;
-      color: #6f4e37;
-    }
-
+    .modal-content h2 { margin-bottom: 15px; color: #6f4e37; }
     .modal-content input {
-      width: 100%;
-      padding: 10px;
-      margin: 8px 0;
-      border: 1px solid #ccc;
-      border-radius: 5px;
+      width: 100%; padding: 10px;
+      margin: 8px 0; border: 1px solid #ccc; border-radius: 5px;
     }
-
     .modal-content button {
-      background: #6f4e37;
-      color: #fff;
-      border: none;
-      padding: 10px 16px;
-      margin-top: 10px;
-      border-radius: 6px;
-      cursor: pointer;
-      width: 100%;
+      background: #6f4e37; color: #fff;
+      border: none; padding: 10px 16px;
+      margin-top: 10px; border-radius: 6px;
+      cursor: pointer; width: 100%;
     }
-
-    .modal-content button:hover {
-      background: #8b5e3b;
-    }
-
-    .close-btn {
-      float: right;
-      font-size: 20px;
-      cursor: pointer;
-      color: #555;
-    }
+    .modal-content button:hover { background: #8b5e3b; }
+    .close-btn { float: right; font-size: 20px; cursor: pointer; color: #555; }
 
     @keyframes fadeIn {
       from { opacity: 0; transform: scale(0.9); }
@@ -269,7 +274,12 @@
       <a href="index.html">Home</a>
       <a href="menu.html">Menu</a>
       <a href="cart.html" class="active">Cart <span id="cart-count">0</span></a>
-      <a href="#" id="signin-btn">Sign In</a>
+      <div style="position: relative; display:inline-block;">
+        <a href="#" id="signin-btn">Sign In</a>
+        <div class="dropdown" id="dropdown-menu">
+          <button id="signout-btn">Sign Out</button>
+        </div>
+      </div>
     </nav>
   </header>
 
@@ -288,135 +298,206 @@
     </div>
   </div>
 
-  <!-- ===== Sign In Modal ===== -->
+  <!-- ===== Sign In / Sign Up Modal ===== -->
   <div id="signin-modal" class="modal">
     <div class="modal-content">
       <span class="close-btn">&times;</span>
-      <h2>Sign In</h2>
-      <input type="email" id="email" placeholder="Enter email" required />
-      <input type="password" id="password" placeholder="Enter password" required />
-      <button id="login-btn">Sign In</button>
+
+      <div class="tab-buttons">
+        <button id="tab-signin" class="active">Sign In</button>
+        <button id="tab-signup">Sign Up</button>
+      </div>
+
+      <div id="signin-tab" class="tab-content active">
+        <h2>Sign In</h2>
+        <input type="email" id="signin-email" placeholder="Email" required />
+        <input type="password" id="signin-password" placeholder="Password" required />
+        <button id="login-btn">Sign In</button>
+      </div>
+
+      <div id="signup-tab" class="tab-content">
+        <h2>Create Account</h2>
+        <input type="text" id="signup-name" placeholder="Full Name" required />
+        <input type="email" id="signup-email" placeholder="Email" required />
+        <input type="password" id="signup-password" placeholder="Password" required />
+        <button id="register-btn">Register</button>
+      </div>
     </div>
   </div>
 
   <script>
-    /* ===== CART LOGIC ===== */
-    let cart = JSON.parse(localStorage.getItem("cart")) || [];
-    const cartContainer = document.getElementById("cart-items");
-    const totalEl = document.getElementById("cart-total");
-    const cartCount = document.getElementById("cart-count");
+    document.addEventListener("DOMContentLoaded", () => {
+      const modal = document.getElementById("signin-modal");
+      const signinBtn = document.getElementById("signin-btn");
+      const dropdown = document.getElementById("dropdown-menu");
+      const signoutBtn = document.getElementById("signout-btn");
+      const closeBtn = document.querySelector(".close-btn");
 
-    function renderCart() {
-      cartContainer.innerHTML = "";
-      let total = 0;
-      if (cart.length === 0) {
-        cartContainer.innerHTML = '<p class="empty">Your cart is empty ☕</p>';
-        totalEl.textContent = "0.00";
-        cartCount.textContent = "0";
-        return;
-      }
+      const tabSignin = document.getElementById("tab-signin");
+      const tabSignup = document.getElementById("tab-signup");
+      const signinTab = document.getElementById("signin-tab");
+      const signupTab = document.getElementById("signup-tab");
+      const loginBtn = document.getElementById("login-btn");
+      const registerBtn = document.getElementById("register-btn");
 
-      cart.forEach((item, index) => {
-        const subtotal = item.price * item.quantity;
-        total += subtotal;
-
-        const div = document.createElement("div");
-        div.classList.add("cart-item");
-        div.innerHTML = `
-          <img src="${item.image || 'images/default.jpg'}" alt="${item.name}">
-          <div class="item-details">
-            <h3>${item.name}</h3>
-            <p class="price">Price: ₹${item.price.toFixed(2)}</p>
-            <div class="qty-control">
-              <button class="qty-btn decrease" data-index="${index}">−</button>
-              <input type="text" value="${item.quantity}" class="qty-value" readonly>
-              <button class="qty-btn increase" data-index="${index}">+</button>
-            </div>
-            <p class="subtotal">Subtotal: ₹${subtotal.toFixed(2)}</p>
-          </div>
-          <button class="remove-btn" data-index="${index}">Remove</button>
-        `;
-        cartContainer.appendChild(div);
+      // ===== Tabs Switch =====
+      tabSignin.addEventListener("click", () => {
+        tabSignin.classList.add("active");
+        tabSignup.classList.remove("active");
+        signinTab.classList.add("active");
+        signupTab.classList.remove("active");
+      });
+      tabSignup.addEventListener("click", () => {
+        tabSignup.classList.add("active");
+        tabSignin.classList.remove("active");
+        signupTab.classList.add("active");
+        signinTab.classList.remove("active");
       });
 
-      totalEl.textContent = total.toFixed(2);
-      cartCount.textContent = cart.reduce((acc, i) => acc + i.quantity, 0);
-      localStorage.setItem("cart", JSON.stringify(cart));
-    }
+      // ===== Modal open/close =====
+      signinBtn.addEventListener("click", () => {
+        const loggedUser = localStorage.getItem("loggedUser");
+        if (!loggedUser) modal.style.display = "flex";
+        else dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+      });
 
-    document.addEventListener("click", (e) => {
-      if (e.target.classList.contains("increase")) {
-        cart[e.target.dataset.index].quantity++;
-      } else if (e.target.classList.contains("decrease")) {
-        const idx = e.target.dataset.index;
-        if (cart[idx].quantity > 1) cart[idx].quantity--;
-        else cart.splice(idx, 1);
-      } else if (e.target.classList.contains("remove-btn")) {
-        cart.splice(e.target.dataset.index, 1);
+      closeBtn.addEventListener("click", () => modal.style.display = "none");
+      window.addEventListener("click", (e) => {
+        if (e.target === modal) modal.style.display = "none";
+        if (!signinBtn.contains(e.target)) dropdown.style.display = "none";
+      });
+
+      // ===== User Handling =====
+      const users = JSON.parse(localStorage.getItem("users") || "[]");
+
+      const updateNavbar = () => {
+        const loggedUser = localStorage.getItem("loggedUser");
+        if (loggedUser) {
+          const userObj = users.find(u => u.email === loggedUser);
+          const name = userObj ? userObj.name.split(" ")[0] : "User";
+          signinBtn.textContent = "Hello, " + name;
+          signinBtn.style.background = "#4caf50";
+        } else {
+          signinBtn.textContent = "Sign In";
+          signinBtn.style.background = "#6f4e37";
+        }
+      };
+
+      registerBtn.addEventListener("click", () => {
+        const name = document.getElementById("signup-name").value.trim();
+        const email = document.getElementById("signup-email").value.trim();
+        const pass = document.getElementById("signup-password").value.trim();
+
+        if (!name || !email || !pass) return alert("Please fill all fields.");
+        if (users.find(u => u.email === email)) return alert("Email already registered.");
+
+        users.push({ name, email, pass });
+        localStorage.setItem("users", JSON.stringify(users));
+        alert("Account created successfully!");
+        tabSignin.click();
+      });
+
+      loginBtn.addEventListener("click", () => {
+        const email = document.getElementById("signin-email").value.trim();
+        const pass = document.getElementById("signin-password").value.trim();
+        const user = users.find(u => u.email === email && u.pass === pass);
+        if (!user) return alert("Invalid credentials.");
+
+        localStorage.setItem("loggedUser", user.email);
+        modal.style.display = "none";
+        alert("Welcome back, " + user.name + "!");
+        updateNavbar();
+
+        // Continue checkout if triggered
+        if (window.pendingCheckout) {
+          proceedCheckout();
+          window.pendingCheckout = false;
+        }
+      });
+
+      signoutBtn.addEventListener("click", () => {
+        localStorage.removeItem("loggedUser");
+        dropdown.style.display = "none";
+        updateNavbar();
+      });
+
+      updateNavbar();
+
+      /* ===== CART LOGIC ===== */
+      let cart = JSON.parse(localStorage.getItem("cart")) || [];
+      const cartContainer = document.getElementById("cart-items");
+      const totalEl = document.getElementById("cart-total");
+      const cartCount = document.getElementById("cart-count");
+
+      function renderCart() {
+        cartContainer.innerHTML = "";
+        let total = 0;
+        if (cart.length === 0) {
+          cartContainer.innerHTML = '<p class="empty">Your cart is empty ☕</p>';
+          totalEl.textContent = "0.00";
+          cartCount.textContent = "0";
+          return;
+        }
+
+        cart.forEach((item, index) => {
+          const subtotal = item.price * item.quantity;
+          total += subtotal;
+
+          const div = document.createElement("div");
+          div.classList.add("cart-item");
+          div.innerHTML = `
+            <img src="${item.image || 'images/default.jpg'}" alt="${item.name}">
+            <div class="item-details">
+              <h3>${item.name}</h3>
+              <p class="price">Price: ₹${item.price.toFixed(2)}</p>
+              <div class="qty-control">
+                <button class="qty-btn decrease" data-index="${index}">−</button>
+                <input type="text" value="${item.quantity}" class="qty-value" readonly>
+                <button class="qty-btn increase" data-index="${index}">+</button>
+              </div>
+              <p class="subtotal">Subtotal: ₹${subtotal.toFixed(2)}</p>
+            </div>
+            <button class="remove-btn" data-index="${index}">Remove</button>
+          `;
+          cartContainer.appendChild(div);
+        });
+
+        totalEl.textContent = total.toFixed(2);
+        cartCount.textContent = cart.reduce((acc, i) => acc + i.quantity, 0);
+        localStorage.setItem("cart", JSON.stringify(cart));
       }
-      localStorage.setItem("cart", JSON.stringify(cart));
+
+      document.addEventListener("click", (e) => {
+        if (e.target.classList.contains("increase")) {
+          cart[e.target.dataset.index].quantity++;
+        } else if (e.target.classList.contains("decrease")) {
+          const idx = e.target.dataset.index;
+          if (cart[idx].quantity > 1) cart[idx].quantity--;
+          else cart.splice(idx, 1);
+        } else if (e.target.classList.contains("remove-btn")) {
+          cart.splice(e.target.dataset.index, 1);
+        }
+        localStorage.setItem("cart", JSON.stringify(cart));
+        renderCart();
+      });
+
       renderCart();
-    });
 
-    renderCart();
-
-    /* ===== SIGN-IN MODAL ===== */
-    const modal = document.getElementById("signin-modal");
-    const signinBtn = document.getElementById("signin-btn");
-    const closeBtn = document.querySelector(".close-btn");
-    const loginBtn = document.getElementById("login-btn");
-    let redirectAfterLogin = null;
-
-    function updateNavbarUser() {
-      const user = localStorage.getItem("user");
-      if (user) {
-        signinBtn.textContent = "Hello, " + user.split("@")[0];
-        signinBtn.style.background = "#4caf50";
-        signinBtn.onclick = () => {
-          if (confirm("Sign out?")) {
-            localStorage.removeItem("user");
-            updateNavbarUser();
-            localStorage.setItem("signedOut", "true");
-          }
-        };
-      } else {
-        signinBtn.textContent = "Sign In";
-        signinBtn.style.background = "#fff";
-        signinBtn.onclick = () => modal.style.display = "flex";
+      function proceedCheckout() {
+        alert("✅ Order placed successfully! Thank you for shopping ☕");
+        localStorage.removeItem("cart");
+        renderCart();
       }
-    }
 
-    closeBtn.onclick = () => modal.style.display = "none";
-    window.onclick = (e) => { if (e.target === modal) modal.style.display = "none"; };
-
-    loginBtn.onclick = () => {
-      const email = document.getElementById("email").value.trim();
-      const pass = document.getElementById("password").value.trim();
-      if (!email || !pass) return alert("Please enter both email and password.");
-      localStorage.setItem("user", email);
-      modal.style.display = "none";
-      alert("Signed in successfully!");
-      updateNavbarUser();
-      if (redirectAfterLogin === "checkout") proceedCheckout();
-    };
-
-    function proceedCheckout() {
-      alert("Order placed successfully! Thank you for shopping ☕");
-      localStorage.removeItem("cart");
-      renderCart();
-    }
-
-    /* ===== CHECKOUT ===== */
-    document.getElementById("checkout-btn").addEventListener("click", () => {
-      if (!localStorage.getItem("user")) {
-        redirectAfterLogin = "checkout";
-        modal.style.display = "flex";
-        return;
-      }
-      proceedCheckout();
+      document.getElementById("checkout-btn").addEventListener("click", () => {
+        if (!localStorage.getItem("loggedUser")) {
+          window.pendingCheckout = true;
+          modal.style.display = "flex";
+          return;
+        }
+        proceedCheckout();
+      });
     });
-
-    updateNavbarUser();
   </script>
 </body>
 </html>
