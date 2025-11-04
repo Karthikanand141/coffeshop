@@ -6,34 +6,68 @@
   <title>Coffee Haven | Menu</title>
   <link rel="stylesheet" href="css/style.css" />
   <style>
-    /* ===== Navbar Sign-In Button ===== */
-    #signin-btn {
+    /* ===== Navbar ===== */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       background-color: #6f4e37;
+      padding: 12px 20px;
       color: white;
+      flex-wrap: wrap;
+    }
+    .logo {
+      font-size: 1.5em;
+      font-weight: bold;
+      color: white;
+      text-decoration: none;
+    }
+    .navbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 15px;
+    }
+    .navbar a {
+      color: white;
+      text-decoration: none;
+      padding: 6px 10px;
+      border-radius: 5px;
+      transition: 0.3s;
+    }
+    .navbar a.active,
+    .navbar a:hover {
+      background-color: #8b5e3b;
+    }
+
+    /* ===== Signin button ===== */
+    #signin-btn {
+      background-color: #fff;
+      color: #6f4e37;
       padding: 6px 12px;
       border-radius: 6px;
-      text-decoration: none;
-      transition: 0.3s;
+      font-weight: 600;
       cursor: pointer;
+      transition: 0.3s;
       position: relative;
     }
-    #signin-btn:hover { background-color: #8b5e3b; }
+    #signin-btn:hover {
+      background-color: #f3e9e3;
+    }
 
     /* ===== Dropdown ===== */
     .dropdown {
       display: none;
       position: absolute;
-      top: 30px;
+      top: 35px;
       right: 0;
       background: white;
       border: 1px solid #ccc;
       border-radius: 8px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
       z-index: 1000;
-      min-width: 120px;
-      text-align: left;
+      min-width: 130px;
     }
-
     .dropdown button {
       background: none;
       border: none;
@@ -43,45 +77,64 @@
       cursor: pointer;
       color: #6f4e37;
     }
-
-    .dropdown button:hover { background-color: #f3e9e3; }
+    .dropdown button:hover {
+      background-color: #f3e9e3;
+    }
 
     /* ===== Modal ===== */
     .modal {
       display: none;
       position: fixed;
       z-index: 999;
-      left: 0; top: 0;
-      width: 100%; height: 100%;
-      background-color: rgba(0,0,0,0.5);
-      justify-content: center; align-items: center;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      justify-content: center;
+      align-items: center;
     }
-
     .modal-content {
       background: #fff;
       padding: 25px 30px;
       border-radius: 10px;
       width: 340px;
       text-align: center;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
       animation: fadeIn 0.3s ease;
     }
-
-    .modal-content h2 { margin-bottom: 15px; color: #6f4e37; }
+    .modal-content h2 {
+      margin-bottom: 15px;
+      color: #6f4e37;
+    }
     .modal-content input {
-      width: 100%; padding: 10px;
-      margin: 8px 0; border: 1px solid #ccc; border-radius: 5px;
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
     }
     .modal-content button {
-      background: #6f4e37; color: #fff;
-      border: none; padding: 10px 16px;
-      margin-top: 10px; border-radius: 6px;
-      cursor: pointer; width: 100%;
+      background: #6f4e37;
+      color: #fff;
+      border: none;
+      padding: 10px 16px;
+      margin-top: 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      width: 100%;
     }
-    .modal-content button:hover { background: #8b5e3b; }
-    .close-btn { float: right; font-size: 20px; cursor: pointer; color: #555; }
+    .modal-content button:hover {
+      background: #8b5e3b;
+    }
+    .close-btn {
+      float: right;
+      font-size: 20px;
+      cursor: pointer;
+      color: #555;
+    }
 
-    /* ===== Tabs ===== */
+    /* Tabs */
     .tab-buttons {
       display: flex;
       justify-content: center;
@@ -100,12 +153,72 @@
       border-bottom: 2px solid #6f4e37;
       color: #4b3621;
     }
-    .tab-content { display: none; }
-    .tab-content.active { display: block; }
+    .tab-content {
+      display: none;
+    }
+    .tab-content.active {
+      display: block;
+    }
 
     @keyframes fadeIn {
-      from { opacity: 0; transform: scale(0.9); }
-      to { opacity: 1; transform: scale(1); }
+      from {
+        opacity: 0;
+        transform: scale(0.9);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    /* ===== Menu Section ===== */
+    .menu {
+      padding: 40px 20px;
+      text-align: center;
+    }
+    .menu-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 25px;
+      margin-top: 25px;
+    }
+    .menu-item {
+      background: #fff7f0;
+      border-radius: 12px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      transition: transform 0.3s;
+    }
+    .menu-item:hover {
+      transform: translateY(-5px);
+    }
+    .menu-item img {
+      width: 100px;
+      height: 100px;
+      object-fit: contain;
+    }
+    .menu-item h3 {
+      color: #6f4e37;
+    }
+    .add-cart {
+      margin-top: 10px;
+      background: #6f4e37;
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .add-cart:hover {
+      background: #8b5e3b;
+    }
+
+    footer {
+      background: #6f4e37;
+      color: white;
+      text-align: center;
+      padding: 10px;
     }
   </style>
 </head>
@@ -138,21 +251,18 @@
         <p class="price">$3.00</p>
         <button class="add-cart" data-name="Espresso" data-price="3" data-img="images/coffee1.png">Add to Cart</button>
       </div>
-
       <div class="menu-item">
         <img src="images/coffee2.png" alt="Cappuccino" />
         <h3>Cappuccino</h3>
         <p class="price">$4.50</p>
         <button class="add-cart" data-name="Cappuccino" data-price="4.5" data-img="images/coffee2.png">Add to Cart</button>
       </div>
-
       <div class="menu-item">
         <img src="images/coffee3.png" alt="Latte" />
         <h3>Latte</h3>
         <p class="price">$4.00</p>
         <button class="add-cart" data-name="Latte" data-price="4" data-img="images/coffee3.png">Add to Cart</button>
       </div>
-
       <div class="menu-item">
         <img src="images/coffee4.png" alt="Mocha" />
         <h3>Mocha</h3>
@@ -162,17 +272,15 @@
     </div>
   </section>
 
-  <!-- ===== Sign In / Sign Up Modal ===== -->
+  <!-- ===== Modal ===== -->
   <div id="signin-modal" class="modal">
     <div class="modal-content">
       <span class="close-btn">&times;</span>
-
       <div class="tab-buttons">
         <button id="tab-signin" class="active">Sign In</button>
         <button id="tab-signup">Sign Up</button>
       </div>
 
-      <!-- Sign In -->
       <div id="signin-tab" class="tab-content active">
         <h2>Sign In</h2>
         <input type="email" id="signin-email" placeholder="Email" required />
@@ -180,7 +288,6 @@
         <button id="login-btn">Sign In</button>
       </div>
 
-      <!-- Sign Up -->
       <div id="signup-tab" class="tab-content">
         <h2>Create Account</h2>
         <input type="text" id="signup-name" placeholder="Full Name" required />
@@ -196,101 +303,106 @@
   </footer>
 
   <script>
-    const modal = document.getElementById("signin-modal");
+    // ===== Common Sign-in Sync =====
     const signinBtn = document.getElementById("signin-btn");
     const dropdown = document.getElementById("dropdown-menu");
+    const modal = document.getElementById("signin-modal");
+    const closeBtn = document.querySelector(".close-btn");
     const signoutBtn = document.getElementById("signout-btn");
     const cancelBtn = document.getElementById("cancel-btn");
-    const closeBtn = document.querySelector(".close-btn");
+    const users = JSON.parse(localStorage.getItem("users") || "[]");
+    const loggedUser = localStorage.getItem("loggedUser");
 
-    const tabSignin = document.getElementById("tab-signin");
-    const tabSignup = document.getElementById("tab-signup");
-    const signinTab = document.getElementById("signin-tab");
-    const signupTab = document.getElementById("signup-tab");
-    const loginBtn = document.getElementById("login-btn");
-    const registerBtn = document.getElementById("register-btn");
-
-    // ===== TAB SWITCH =====
-    tabSignin.addEventListener("click", () => {
-      tabSignin.classList.add("active");
-      tabSignup.classList.remove("active");
-      signinTab.classList.add("active");
-      signupTab.classList.remove("active");
-    });
-    tabSignup.addEventListener("click", () => {
-      tabSignup.classList.add("active");
-      tabSignin.classList.remove("active");
-      signupTab.classList.add("active");
-      signinTab.classList.remove("active");
-    });
-
-    // ===== OPEN / CLOSE MODAL =====
-    signinBtn.addEventListener("click", () => {
-      if (!localStorage.getItem("loggedUser")) {
-        modal.style.display = "flex";
+    // Update UI
+    function updateUserUI() {
+      const user = localStorage.getItem("loggedUser");
+      if (user) {
+        const name = user.split("@")[0];
+        signinBtn.textContent = "Hello, " + name;
+        signinBtn.style.background = "#fff";
+        signinBtn.style.color = "#4caf50";
       } else {
+        signinBtn.textContent = "Sign In";
+        signinBtn.style.background = "#fff";
+        signinBtn.style.color = "#6f4e37";
+      }
+    }
+    updateUserUI();
+
+    // Modal open
+    signinBtn.addEventListener("click", () => {
+      const user = localStorage.getItem("loggedUser");
+      if (user) {
         dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+      } else {
+        modal.style.display = "flex";
       }
     });
-
     closeBtn.addEventListener("click", () => modal.style.display = "none");
-    window.addEventListener("click", (e) => {
+    window.addEventListener("click", e => {
       if (e.target === modal) modal.style.display = "none";
       if (!signinBtn.contains(e.target)) dropdown.style.display = "none";
     });
 
-    // ===== USER DATA =====
-    const users = JSON.parse(localStorage.getItem("users") || "[]");
-    let loggedUser = localStorage.getItem("loggedUser");
+    // Tabs
+    document.getElementById("tab-signin").addEventListener("click", () => {
+      document.getElementById("signin-tab").classList.add("active");
+      document.getElementById("signup-tab").classList.remove("active");
+      document.getElementById("tab-signin").classList.add("active");
+      document.getElementById("tab-signup").classList.remove("active");
+    });
+    document.getElementById("tab-signup").addEventListener("click", () => {
+      document.getElementById("signup-tab").classList.add("active");
+      document.getElementById("signin-tab").classList.remove("active");
+      document.getElementById("tab-signup").classList.add("active");
+      document.getElementById("tab-signin").classList.remove("active");
+    });
 
-    if (loggedUser) {
-      const name = loggedUser.split("@")[0];
-      signinBtn.textContent = "Hello, " + name;
-      signinBtn.style.background = "#4caf50";
-    }
-
-    // ===== SIGN UP =====
-    registerBtn.addEventListener("click", () => {
+    // Register
+    document.getElementById("register-btn").addEventListener("click", () => {
       const name = document.getElementById("signup-name").value.trim();
       const email = document.getElementById("signup-email").value.trim();
       const pass = document.getElementById("signup-password").value.trim();
-
       if (!name || !email || !pass) return alert("Please fill all fields.");
       if (users.find(u => u.email === email)) return alert("Email already registered.");
-
       users.push({ name, email, pass });
       localStorage.setItem("users", JSON.stringify(users));
-      alert("Account created successfully!");
-      tabSignin.click();
+      alert("Account created!");
+      document.getElementById("tab-signin").click();
     });
 
-    // ===== SIGN IN =====
-    loginBtn.addEventListener("click", () => {
+    // Login
+    document.getElementById("login-btn").addEventListener("click", () => {
       const email = document.getElementById("signin-email").value.trim();
       const pass = document.getElementById("signin-password").value.trim();
       const user = users.find(u => u.email === email && u.pass === pass);
-
       if (!user) return alert("Invalid credentials.");
       localStorage.setItem("loggedUser", user.email);
       modal.style.display = "none";
-      alert("Welcome back, " + user.name + "!");
+      updateUserUI();
+      alert("Welcome " + user.name + "!");
       location.reload();
     });
 
-    // ===== SIGN OUT =====
+    // Signout
     signoutBtn.addEventListener("click", () => {
       localStorage.removeItem("loggedUser");
       dropdown.style.display = "none";
-      signinBtn.textContent = "Sign In";
-      signinBtn.style.background = "#6f4e37";
+      updateUserUI();
+      location.reload();
     });
-
     cancelBtn.addEventListener("click", () => dropdown.style.display = "none");
 
-    // ===== ADD TO CART =====
+    // ===== Cart =====
     const cartBtns = document.querySelectorAll(".add-cart");
     cartBtns.forEach(btn => {
       btn.addEventListener("click", () => {
+        const user = localStorage.getItem("loggedUser");
+        if (!user) {
+          alert("Please sign in before adding to cart!");
+          modal.style.display = "flex";
+          return;
+        }
         const cart = JSON.parse(localStorage.getItem("cart") || "[]");
         const item = {
           name: btn.dataset.name,
@@ -307,7 +419,7 @@
       });
     });
 
-    // ===== SHOW CART COUNT =====
+    // Show count
     const cart = JSON.parse(localStorage.getItem("cart") || "[]");
     document.getElementById("cart-count").textContent = cart.length;
   </script>
