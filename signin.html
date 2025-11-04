@@ -1,34 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sign In | Coffee Haven</title>
-  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    body {
+      font-family: "Poppins", sans-serif;
+      background: #fafafa;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .login-box {
+      background: white;
+      padding: 30px 40px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      width: 320px;
+      text-align: center;
+    }
+    h2 {
+      color: #800000;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+    button {
+      background: #800000;
+      color: white;
+      border: none;
+      width: 100%;
+      padding: 10px;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #a00000;
+    }
+    p {
+      margin-top: 10px;
+      font-size: 14px;
+      color: #555;
+    }
+  </style>
 </head>
 <body>
-  <header>
-    <a href="index.html" class="logo">☕ Coffee Haven</a>
-  </header>
 
-  <section class="signin">
-    <h2>Sign In to Continue</h2>
-    <form id="login-form">
-      <label>Email</label>
-      <input type="email" id="email" required placeholder="you@example.com" />
-      <label>Password</label>
-      <input type="password" id="password" required placeholder="Enter password" />
-      <button type="submit">Sign In</button>
-      <p>New user? <a href="#">Create account</a></p>
-    </form>
-  </section>
+  <div class="login-box">
+    <h2>Sign In</h2>
+    <input type="text" id="username" placeholder="Enter your name" />
+    <input type="password" id="password" placeholder="Enter password" />
+    <button onclick="signIn()">Sign In</button>
+    <p id="error" style="color:red;"></p>
+  </div>
 
   <script>
-    document.getElementById("login-form").addEventListener("submit", function(e) {
-      e.preventDefault();
-      localStorage.setItem("user", document.getElementById("email").value);
-      window.location.href = "menu.html";
-    });
+    function signIn() {
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value.trim();
+      const error = document.getElementById("error");
+
+      if (username === "" || password === "") {
+        error.textContent = "Please enter both fields!";
+        return;
+      }
+
+      // Save user session (mock)
+      localStorage.setItem("user", JSON.stringify({ name: username }));
+
+      // Redirect to home
+      window.location.href = "index.html";
+    }
   </script>
 </body>
 </html>
