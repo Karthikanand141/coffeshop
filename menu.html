@@ -5,395 +5,285 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Coffee Haven | Menu</title>
   <link rel="stylesheet" href="css/style.css" />
-  <style>
-    body {
-      font-family: "Poppins", sans-serif;
-      background-color: #fafafa;
-      margin: 0;
-      padding: 0;
-    }
-
-    /* ===== Header / Navbar ===== */
-    header {
-      background-color: #6f4e37;
-      color: white;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 15px 40px;
-      flex-wrap: wrap;
-    }
-
-    .logo {
-      font-size: 1.5rem;
-      text-decoration: none;
-      color: #fff;
-      font-weight: 600;
-    }
-
-    .navbar a {
-      color: #fff;
-      margin-left: 20px;
-      text-decoration: none;
-      font-size: 1rem;
-      transition: 0.3s;
-    }
-
-    .navbar a:hover,
-    .navbar a.active {
-      color: #ffdfba;
-    }
-
-    #signin-btn {
-      background-color: #fff;
-      color: #6f4e37;
-      padding: 6px 12px;
-      border-radius: 6px;
-      text-decoration: none;
-      transition: 0.3s;
-      cursor: pointer;
-      font-weight: 500;
-    }
-
-    #signin-btn:hover {
-      background-color: #ffdfba;
-    }
-
-    /* ===== Menu Section ===== */
-    .menu {
-      padding: 40px 20px;
-      text-align: center;
-    }
-
-    .menu h2 {
-      color: #333;
-      margin-bottom: 20px;
-    }
-
-    .menu-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-      gap: 25px;
-      margin-top: 25px;
-    }
-
-    .menu-item {
-      background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-      padding: 20px;
-      transition: transform 0.3s;
-    }
-
-    .menu-item:hover {
-      transform: translateY(-5px);
-    }
-
-    .menu-item img {
-      width: 100px;
-      height: 100px;
-      object-fit: contain;
-    }
-
-    .menu-item h3 {
-      color: #6f4e37;
-    }
-
-    .price {
-      color: #444;
-      font-weight: 500;
-    }
-
-    .qty-section {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-top: 10px;
-      gap: 10px;
-    }
-
-    .qty-label {
-      font-weight: 500;
-      color: #6f4e37;
-    }
-
-    .qty-input {
-      width: 45px;
-      text-align: center;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      padding: 4px;
-    }
-
-    .menu-buttons {
-      margin-top: 10px;
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-    }
-
-    .menu-btn {
-      background: #6f4e37;
-      color: white;
-      border: none;
-      padding: 8px 12px;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-
-    .menu-btn:hover {
-      background: #8b5e3b;
-    }
-
-    footer {
-      background: #6f4e37;
-      color: white;
-      text-align: center;
-      padding: 10px;
-    }
-
-    /* ===== Modal (Sign-in) ===== */
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 999;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0,0,0,0.5);
-      justify-content: center;
-      align-items: center;
-    }
-
-    .modal-content {
-      background: #fff;
-      padding: 25px 30px;
-      border-radius: 10px;
-      width: 320px;
-      text-align: center;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-      animation: fadeIn 0.3s ease;
-    }
-
-    .modal-content h2 {
-      margin-bottom: 15px;
-      color: #6f4e37;
-    }
-
-    .modal-content input {
-      width: 100%;
-      padding: 10px;
-      margin: 8px 0;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-    }
-
-    .modal-content button {
-      background: #6f4e37;
-      color: #fff;
-      border: none;
-      padding: 10px 16px;
-      margin-top: 10px;
-      border-radius: 6px;
-      cursor: pointer;
-      width: 100%;
-    }
-
-    .modal-content button:hover {
-      background: #8b5e3b;
-    }
-
-    .close-btn {
-      float: right;
-      font-size: 20px;
-      cursor: pointer;
-      color: #555;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: scale(0.9); }
-      to { opacity: 1; transform: scale(1); }
-    }
-  </style>
 </head>
 <body>
-  <!-- ===== Header / Navbar ===== -->
-  <header>
-    <a href="index.html" class="logo">☕ Coffee Haven</a>
-    <nav class="navbar">
-      <a href="index.html">Home</a>
-      <a href="menu.html" class="active">Menu</a>
-      <a href="cart.html">Cart <span id="cart-count">0</span></a>
-      <a href="#" id="signin-btn">Sign In</a>
-    </nav>
-  </header>
 
-  <!-- ===== Menu Section ===== -->
-  <section class="menu">
-    <h2>Our Coffee Menu</h2>
-    <div class="menu-container">
-      <div class="menu-item">
-        <img src="images/coffee1.png" alt="Espresso" />
-        <h3>Espresso</h3>
-        <p class="price">₹120</p>
-        <div class="qty-section">
-          <span class="qty-label">Qty:</span>
-          <input type="number" class="qty-input" min="1" value="1">
-        </div>
-        <div class="menu-buttons">
-          <button class="menu-btn add-cart" data-name="Espresso" data-price="120" data-img="images/coffee1.png">Add to Cart</button>
-          <button class="menu-btn buy-now" data-name="Espresso" data-price="120" data-img="images/coffee1.png">Buy Now</button>
-        </div>
-      </div>
+<header>
+  <a class="logo">☕ Coffee Haven</a>
+  <nav class="navbar">
+    <a href="index.html">Home</a>
+    <a href="menu.html" class="active">Menu</a>
+    <a href="cart.html">Cart <span id="cart-count">0</span></a>
 
-      <div class="menu-item">
-        <img src="images/coffee2.png" alt="Cappuccino" />
-        <h3>Cappuccino</h3>
-        <p class="price">₹150</p>
-        <div class="qty-section">
-          <span class="qty-label">Qty:</span>
-          <input type="number" class="qty-input" min="1" value="1">
-        </div>
-        <div class="menu-buttons">
-          <button class="menu-btn add-cart" data-name="Cappuccino" data-price="150" data-img="images/coffee2.png">Add to Cart</button>
-          <button class="menu-btn buy-now" data-name="Cappuccino" data-price="150" data-img="images/coffee2.png">Buy Now</button>
-        </div>
-      </div>
-
-      <div class="menu-item">
-        <img src="images/coffee3.png" alt="Latte" />
-        <h3>Latte</h3>
-        <p class="price">₹140</p>
-        <div class="qty-section">
-          <span class="qty-label">Qty:</span>
-          <input type="number" class="qty-input" min="1" value="1">
-        </div>
-        <div class="menu-buttons">
-          <button class="menu-btn add-cart" data-name="Latte" data-price="140" data-img="images/coffee3.png">Add to Cart</button>
-          <button class="menu-btn buy-now" data-name="Latte" data-price="140" data-img="images/coffee3.png">Buy Now</button>
-        </div>
-      </div>
-
-      <div class="menu-item">
-        <img src="images/coffee4.png" alt="Mocha" />
-        <h3>Mocha</h3>
-        <p class="price">₹160</p>
-        <div class="qty-section">
-          <span class="qty-label">Qty:</span>
-          <input type="number" class="qty-input" min="1" value="1">
-        </div>
-        <div class="menu-buttons">
-          <button class="menu-btn add-cart" data-name="Mocha" data-price="160" data-img="images/coffee4.png">Add to Cart</button>
-          <button class="menu-btn buy-now" data-name="Mocha" data-price="160" data-img="images/coffee4.png">Buy Now</button>
-        </div>
+    <div id="signin-wrapper">
+      <a id="signin-btn">Sign In</a>
+      <div class="dropdown" id="dropdown-menu">
+        <button id="signout-btn">Sign Out</button>
       </div>
     </div>
-  </section>
+  </nav>
+</header>
 
-  <!-- ===== Sign In Modal ===== -->
-  <div id="signin-modal" class="modal">
-    <div class="modal-content">
-      <span class="close-btn">&times;</span>
-      <h2>Sign In</h2>
-      <input type="email" id="email" placeholder="Enter email" required />
-      <input type="password" id="password" placeholder="Enter password" required />
-      <button id="login-btn">Sign In</button>
+<!-- ===== Menu Section ===== -->
+<section class="menu">
+  <h2>Our Coffee Menu</h2>
+  <div class="menu-container">
+    <div class="menu-item">
+      <img src="images/coffee1.png" alt="Espresso" />
+      <h3>Espresso</h3>
+      <p class="price">₹120</p>
+      <div class="quantity-control">
+        <label>Qty:</label>
+        <select class="qty-select">
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+          <option>4</option>
+          <option>5</option>
+        </select>
+      </div>
+      <div class="action-buttons">
+        <button class="add-cart" data-name="Espresso" data-price="120" data-img="images/coffee1.png">Add to Cart</button>
+        <button class="buy-now" data-name="Espresso" data-price="120" data-img="images/coffee1.png">Buy Now</button>
+      </div>
+    </div>
+
+    <div class="menu-item">
+      <img src="images/coffee2.png" alt="Cappuccino" />
+      <h3>Cappuccino</h3>
+      <p class="price">₹150</p>
+      <div class="quantity-control">
+        <label>Qty:</label>
+        <select class="qty-select">
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+          <option>4</option>
+          <option>5</option>
+        </select>
+      </div>
+      <div class="action-buttons">
+        <button class="add-cart" data-name="Cappuccino" data-price="150" data-img="images/coffee2.png">Add to Cart</button>
+        <button class="buy-now" data-name="Cappuccino" data-price="150" data-img="images/coffee2.png">Buy Now</button>
+      </div>
+    </div>
+
+    <div class="menu-item">
+      <img src="images/coffee3.png" alt="Latte" />
+      <h3>Latte</h3>
+      <p class="price">₹140</p>
+      <div class="quantity-control">
+        <label>Qty:</label>
+        <select class="qty-select">
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+          <option>4</option>
+          <option>5</option>
+        </select>
+      </div>
+      <div class="action-buttons">
+        <button class="add-cart" data-name="Latte" data-price="140" data-img="images/coffee3.png">Add to Cart</button>
+        <button class="buy-now" data-name="Latte" data-price="140" data-img="images/coffee3.png">Buy Now</button>
+      </div>
+    </div>
+
+    <div class="menu-item">
+      <img src="images/coffee4.png" alt="Mocha" />
+      <h3>Mocha</h3>
+      <p class="price">₹160</p>
+      <div class="quantity-control">
+        <label>Qty:</label>
+        <select class="qty-select">
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+          <option>4</option>
+          <option>5</option>
+        </select>
+      </div>
+      <div class="action-buttons">
+        <button class="add-cart" data-name="Mocha" data-price="160" data-img="images/coffee4.png">Add to Cart</button>
+        <button class="buy-now" data-name="Mocha" data-price="160" data-img="images/coffee4.png">Buy Now</button>
+      </div>
     </div>
   </div>
+</section>
 
-  <footer>
-    <p>© 2025 Coffee Haven | Freshly brewed happiness ☕</p>
-  </footer>
+<!-- ===== Sign In Modal ===== -->
+<div id="signin-modal" class="modal">
+  <div class="modal-content">
+    <span class="close-btn">&times;</span>
+    <h2 id="modal-title">Sign In</h2>
+    <input type="email" id="email" placeholder="Email" />
+    <input type="password" id="password" placeholder="Password" />
+    <button id="action-btn">Sign In</button>
+    <p style="margin-top:10px;">
+      <span id="toggle-text">New here?</span>
+      <a href="#" id="toggle-auth">Create Account</a>
+    </p>
+  </div>
+</div>
 
-  <script>
-    /* ===== SIGN-IN SYNC ===== */
-    const signinBtn = document.getElementById("signin-btn");
-    const modal = document.getElementById("signin-modal");
-    const closeBtn = document.querySelector(".close-btn");
-    const loginBtn = document.getElementById("login-btn");
-    const cartCount = document.getElementById("cart-count");
+<footer>
+  <p>© 2025 Coffee Haven | Freshly brewed happiness ☕</p>
+</footer>
 
-    function updateNavbarUser() {
-      const user = localStorage.getItem("user");
-      if (user) {
-        const name = user.split("@")[0];
-        signinBtn.textContent = "Hello, " + name;
-        signinBtn.style.background = "#4caf50";
-        signinBtn.style.color = "#fff";
-        signinBtn.onclick = () => {
-          if (confirm("Sign out?")) {
-            localStorage.removeItem("user");
-            updateNavbarUser();
-            localStorage.setItem("signedOut", "true");
-          }
-        };
-      } else {
-        signinBtn.textContent = "Sign In";
-        signinBtn.style.background = "#fff";
-        signinBtn.style.color = "#6f4e37";
-        signinBtn.onclick = () => modal.style.display = "flex";
-      }
+<script>
+  const API_URL = "http://localhost:5000";
+
+  // DOM Elements
+  const modal = document.getElementById("signin-modal");
+  const signinBtn = document.getElementById("signin-btn");
+  const signoutBtn = document.getElementById("signout-btn");
+  const dropdown = document.getElementById("dropdown-menu");
+  const toggleAuth = document.getElementById("toggle-auth");
+  const toggleText = document.getElementById("toggle-text");
+  const actionBtn = document.getElementById("action-btn");
+  const modalTitle = document.getElementById("modal-title");
+  const emailInput = document.getElementById("email");
+  const passInput = document.getElementById("password");
+  const cartCount = document.getElementById("cart-count");
+
+  let isSignup = false;
+
+  // Update navigation based on login state
+  function updateNavbar() {
+    const user = localStorage.getItem("loggedUser");
+    if (user) {
+      signinBtn.textContent = user.split("@")[0];
+      signinBtn.style.background = "#4caf50";
+    } else {
+      signinBtn.textContent = "Sign In";
+      signinBtn.style.background = "#6f4e37";
     }
+  }
 
-    // Sync sign-in status across pages
-    window.addEventListener("storage", (e) => {
-      if (e.key === "user" || e.key === "signedOut") updateNavbarUser();
-    });
-
-    closeBtn.onclick = () => modal.style.display = "none";
-    window.onclick = (e) => { if (e.target === modal) modal.style.display = "none"; };
-
-    loginBtn.onclick = () => {
-      const email = document.getElementById("email").value.trim();
-      const pass = document.getElementById("password").value.trim();
-      if (!email || !pass) return alert("Please enter both email and password.");
-      localStorage.setItem("user", email);
-      modal.style.display = "none";
-      alert("Signed in successfully!");
-      updateNavbarUser();
-    };
-
-    updateNavbarUser();
-
-    /* ===== CART LOGIC ===== */
+  // Update cart count
+  function updateCartCount() {
     const cart = JSON.parse(localStorage.getItem("cart")) || [];
-    cartCount.textContent = cart.reduce((acc, i) => acc + i.quantity, 0);
+    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+    cartCount.textContent = totalItems;
+  }
 
-    document.querySelectorAll(".add-cart").forEach(btn => {
-      btn.onclick = () => {
-        const user = localStorage.getItem("user");
-        if (!user) {
-          modal.style.display = "flex";
-          return;
-        }
-        const parent = btn.closest(".menu-item");
-        const qty = parseInt(parent.querySelector(".qty-input").value) || 1;
-        const name = btn.dataset.name;
-        const price = parseFloat(btn.dataset.price);
-        const image = btn.dataset.img;
+  // Initialize page
+  document.addEventListener('DOMContentLoaded', function() {
+    updateNavbar();
+    updateCartCount();
+  });
 
-        const existing = cart.find(i => i.name === name);
-        if (existing) existing.quantity += qty;
-        else cart.push({ name, price, image, quantity: qty });
+  // Sign in button click handler
+  signinBtn.onclick = () => {
+    const user = localStorage.getItem("loggedUser");
+    if (user) {
+      dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+    } else {
+      modal.style.display = "flex";
+    }
+  };
 
-        localStorage.setItem("cart", JSON.stringify(cart));
-        cartCount.textContent = cart.reduce((acc, i) => acc + i.quantity, 0);
-        alert(`${qty} x ${name} added to cart!`);
-      };
-    });
+  // Modal close
+  document.querySelector(".close-btn").onclick = () => {
+    modal.style.display = "none";
+  };
 
-    document.querySelectorAll(".buy-now").forEach(btn => {
-      btn.onclick = () => {
-        const user = localStorage.getItem("user");
-        if (!user) {
-          modal.style.display = "flex";
-          return;
-        }
-        alert("Order placed successfully! ☕");
-      };
-    });
-  </script>
+  // Toggle between sign in and sign up
+  toggleAuth.onclick = (e) => {
+    e.preventDefault();
+    isSignup = !isSignup;
+    modalTitle.textContent = isSignup ? "Create Account" : "Sign In";
+    actionBtn.textContent = isSignup ? "Register" : "Sign In";
+    toggleText.textContent = isSignup ? "Already have an account?" : "New here?";
+    toggleAuth.textContent = isSignup ? "Sign In" : "Create Account";
+  };
+
+  // Sign in/register action
+  actionBtn.onclick = async () => {
+    const email = emailInput.value.trim();
+    const password = passInput.value.trim();
+    if (!email || !password) return alert("Fill all fields");
+
+    const endpoint = isSignup ? "/signup" : "/login";
+    try {
+      const res = await fetch(API_URL + endpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json"},
+        body: JSON.stringify({ email, password })
+      });
+      const data = await res.json();
+
+      if (!data.success) return alert(data.message);
+
+      localStorage.setItem("loggedUser", email);
+      modal.style.display = "none";
+      updateNavbar();
+      emailInput.value = "";
+      passInput.value = "";
+    } catch (error) {
+      alert("Server error. Please try again.");
+    }
+  };
+
+  // Sign out
+  signoutBtn.onclick = () => {
+    localStorage.removeItem("loggedUser");
+    dropdown.style.display = "none";
+    updateNavbar();
+  };
+
+  // Close dropdown when clicking outside
+  document.addEventListener('click', function(event) {
+    if (!event.target.closest('#signin-wrapper')) {
+      dropdown.style.display = 'none';
+    }
+  });
+
+  // Cart functionality
+  document.querySelectorAll(".add-cart").forEach(btn => {
+    btn.onclick = () => {
+      const user = localStorage.getItem("loggedUser");
+      if (!user) {
+        modal.style.display = "flex";
+        return;
+      }
+
+      const parent = btn.closest(".menu-item");
+      const qty = parseInt(parent.querySelector(".qty-select").value) || 1;
+      const name = btn.dataset.name;
+      const price = parseFloat(btn.dataset.price);
+      const image = btn.dataset.img;
+
+      let cart = JSON.parse(localStorage.getItem("cart")) || [];
+      
+      const existingItem = cart.find(item => item.name === name);
+      if (existingItem) {
+        existingItem.quantity += qty;
+      } else {
+        cart.push({ name, price, image, quantity: qty });
+      }
+
+      localStorage.setItem("cart", JSON.stringify(cart));
+      updateCartCount();
+      alert(`${qty} x ${name} added to cart!`);
+    };
+  });
+
+  // Buy now functionality
+  document.querySelectorAll(".buy-now").forEach(btn => {
+    btn.onclick = () => {
+      const user = localStorage.getItem("loggedUser");
+      if (!user) {
+        modal.style.display = "flex";
+        return;
+      }
+      alert("Order placed successfully! ☕");
+    };
+  });
+
+  // Initial calls
+  updateNavbar();
+  updateCartCount();
+</script>
+
 </body>
 </html>
