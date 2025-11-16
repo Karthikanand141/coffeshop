@@ -5,69 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Coffee Haven | Home</title>
   <link rel="stylesheet" href="css/style.css" />
-
-  <style>
-    #signin-btn {
-      background-color: #6f4e37;
-      color: white;
-      padding: 6px 12px;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-    #signin-btn:hover { background-color: #8b5e3b; }
-
-    .dropdown {
-      display: none;
-      position: absolute;
-      top: 38px;
-      right: 0;
-      background: white;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      min-width: 140px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-    }
-    .dropdown button {
-      width: 100%;
-      border: none;
-      padding: 8px 12px;
-      background: none;
-      color: #6f4e37;
-      text-align: left;
-      cursor: pointer;
-    }
-    .dropdown button:hover { background-color: #f3e9e3; }
-
-    .modal {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.5);
-      justify-content: center;
-      align-items: center;
-    }
-    .modal-content {
-      background: #fff;
-      padding: 25px;
-      border-radius: 10px;
-      width: 340px;
-      text-align: center;
-    }
-    .modal-content input, .modal-content button {
-      width: 100%;
-      padding: 10px;
-      margin-top: 8px;
-      border-radius: 6px;
-    }
-    .modal-content button {
-      border: none;
-      background: #6f4e37;
-      color: white;
-      cursor: pointer;
-    }
-    .close-btn { float: right; cursor: pointer; font-size: 20px; }
-  </style>
-
 </head>
 <body>
 
@@ -78,7 +15,7 @@
     <a href="menu.html">Menu</a>
     <a href="cart.html">Cart <span id="cart-count">0</span></a>
 
-    <div id="signin-wrapper" style="position:relative;">
+    <div id="signin-wrapper">
       <a id="signin-btn">Sign In</a>
       <div class="dropdown" id="dropdown-menu">
         <button id="signout-btn">Sign Out</button>
@@ -112,12 +49,12 @@
   </div>
 </div>
 
-<footer style="text-align:center; padding:14px; background:#3e2723; color:white;">
+<footer>
   © 2025 Coffee Haven
 </footer>
 
 <script>
-  const API_URL = "http://localhost:5000"; // backend
+  const API_URL = "http://localhost:5000";
 
   const modal = document.getElementById("signin-modal");
   const signinBtn = document.getElementById("signin-btn");
@@ -143,10 +80,22 @@
     }
   }
 
+  // Initialize page
+  document.addEventListener('DOMContentLoaded', function() {
+    updateNavbar();
+    
+    // Cart count update (you can modify this based on your cart logic)
+    const cartCount = localStorage.getItem('cartCount') || 0;
+    document.getElementById('cart-count').textContent = cartCount;
+  });
+
   signinBtn.onclick = () => {
     const user = localStorage.getItem("loggedUser");
-    if (user) dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
-    else modal.style.display = "flex";
+    if (user) {
+      dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+    } else {
+      modal.style.display = "flex";
+    }
   };
 
   document.querySelector(".close-btn").onclick = () => modal.style.display = "none";
@@ -166,25 +115,40 @@
     if (!email || !password) return alert("Fill all fields");
 
     const endpoint = isSignup ? "/signup" : "/login";
-    const res = await fetch(API_URL + endpoint, {
-      method: "POST",
-      headers: { "Content-Type": "application/json"},
-      body: JSON.stringify({ email, password })
-    });
-    const data = await res.json();
+    try {
+      const res = await fetch(API_URL + endpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json"},
+        body: JSON.stringify({ email, password })
+      });
+      const data = await res.json();
 
-    if (!data.success) return alert(data.message);
+      if (!data.success) return alert(data.message);
 
-    localStorage.setItem("loggedUser", email);
-    modal.style.display = "none";
-    location.reload();
+      localStorage.setItem("loggedUser", email);
+      modal.style.display = "none";
+      updateNavbar();
+      emailInput.value = "";
+      passInput.value = "";
+    } catch (error) {
+      alert("Server error. Please try again.");
+    }
   };
 
   signoutBtn.onclick = () => {
     localStorage.removeItem("loggedUser");
-    location.reload();
+    dropdown.style.display = "none";
+    updateNavbar();
   };
 
+  // Close dropdown when clicking outside
+  document.addEventListener('click', function(event) {
+    if (!event.target.closest('#signin-wrapper')) {
+      dropdown.style.display = 'none';
+    }
+  });
+
+  // Initial update
   updateNavbar();
 </script>
 
