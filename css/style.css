@@ -398,3 +398,19 @@ footer {
   margin-top: 50px;
   font-size: 0.9rem;
 }
+
+.back-btn {
+  background: #6f4e37;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-right: 10px;
+  text-decoration: none;
+  display: inline-block;
+}
+/* ===== back button ===== */
+.back-btn:hover {
+  background: #8b5e3b;
+}
